@@ -4,13 +4,14 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 
 ## App Info:
 
-* Team Name: TODO
+* Team Name: Delulu
 * App Name: TODO
 * App Link: <https://TODO.com/>
 
 ### Students
 
 * Jimmy Xiao, xiao0261@umn.edu
+* David Mai, mai00048@umn.edu
 * ...
 
 
