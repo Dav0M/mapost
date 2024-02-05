@@ -12,6 +12,7 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 
 * Jimmy Xiao, xiao0261@umn.edu
 * David Mai, mai00048@umn.edu
+* Lingyi Xu, xu001032@umn.edu
 * ...
 
 
