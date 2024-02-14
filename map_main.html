@@ -1,0 +1,237 @@
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/offset-vanishing-point-with-padding/ -->
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Offset the vanishing point using padding</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <style>
+        .rounded-rect {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 50px -25px black;
+        }
+
+        .flex-center {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-center.left {
+            left: 0px;
+        }
+
+        .flex-center.right {
+            right: 0px;
+        }
+
+        .sidebar-content {
+            position: absolute;
+            width: 95%;
+            height: 95%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 32px;
+            color: gray;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            width: 1.3em;
+            height: 1.3em;
+            overflow: visible;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sidebar-toggle.left {
+            right: -1.5em;
+        }
+
+        .sidebar-toggle.right {
+            left: -1.5em;
+        }
+
+        .sidebar-toggle:hover {
+            color: #0aa1cf;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            transition: transform 1s;
+            z-index: 1;
+            width: 300px;
+            height: 100%;
+        }
+
+        /*
+  The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
+  The toggleSidebar() function removes this class from the element in order to expand it.
+*/
+        .left.collapsed {
+            transform: translateX(-295px);
+        }
+
+        .right.collapsed {
+            transform: translateX(295px);
+        }
+    </style>
+
+    <div id="map">
+        <div id="left" class="sidebar flex-center left collapsed">
+            <div class="sidebar-content rounded-rect flex-center">
+                Left Sidebar
+                <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
+                    &rarr;
+                </div>
+            </div>
+        </div>
+        <div id="right" class="sidebar flex-center right collapsed">
+            <div class="sidebar-content rounded-rect flex-center">
+                Right Sidebar
+                <div class="sidebar-toggle rounded-rect right" onclick="toggleSidebar('right')">
+                    &larr;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2tpemtwbHVmMDRlZjJ6bG53N3N0YnZwaSJ9.4KAgha3tGP30JElI6rzzuQ';
+        const center = [-77.01866, 38.888];
+        const map = new mapboxgl.Map({
+            container: 'map',
+            zoom: 12.5,
+            center: center,
+            pitch: 60,
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/streets-v12'
+        });
+
+        new mapboxgl.Marker().setLngLat(center).addTo(map);
+
+        function toggleSidebar(id) {
+            const elem = document.getElementById(id);
+            // Add or remove the 'collapsed' CSS class from the sidebar element.
+            // Returns boolean "true" or "false" whether 'collapsed' is in the class list.
+            const collapsed = elem.classList.toggle('collapsed');
+            const padding = {};
+            // 'id' is 'right' or 'left'. When run at start, this object looks like: '{left: 300}';
+            padding[id] = collapsed ? 0 : 300; // 0 if collapsed, 300 px if not. This matches the width of the sidebars in the .sidebar CSS class.
+            // Use `map.easeTo()` with a padding option to adjust the map's center accounting for the position of sidebars.
+            map.easeTo({
+                padding: padding,
+                duration: 1000 // In ms. This matches the CSS transition duration property.
+            });
+        }
+
+        map.on('load', () => {
+            toggleSidebar('left');
+        });
+
+
+        map.on('load', () => {
+            map.addSource('places', {
+                // This GeoJSON contains features that include an "icon"
+                // property. The value of the "icon" property corresponds
+                // to an image in the Mapbox Streets style's sprite.
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': [
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'description':
+                                    '<strong>Username1</strong><p>User introduction or other information 2.</p>',
+                                'icon': 'theatre'
+                            },
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [-77.038659, 38.931567]
+                            }
+                        },
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'description':
+                                    '<strong>Username2</strong><p>User introduction or other information 1.</p>',
+                                'icon': 'theatre'
+                            },
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [-77.003168, 38.894651]
+                            }
+                        }
+                    ]
+                }
+            });
+            // Add a layer showing the places.
+            map.addLayer({
+                'id': 'places',
+                'type': 'symbol',
+                'source': 'places',
+                'layout': {
+                    'icon-image': ['get', 'icon'],
+                    'icon-allow-overlap': true
+                }
+            });
+
+            // When a click event occurs on a feature in the places layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            map.on('click', 'places', (e) => {
+                // Copy coordinates array.
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(description)
+                    .addTo(map);
+            });
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'places', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'places', () => {
+                map.getCanvas().style.cursor = '';
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
