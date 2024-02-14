@@ -4,11 +4,16 @@ from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 
+from data import add_post, get_posts, setup
+
 
 app = Flask(__name__)
 app.secret_key = env['FLASK_SECRET']
 
 oauth = OAuth(app)
+
+with app.app_context():
+    setup()
 
 oauth.register(
     "auth0",
@@ -48,15 +53,10 @@ def logout():
         )
     )
 
-testpost = {'author': 'User',
-            'time': '11:20 PM',
-            'content': 'Filler Content',
-            'location': '1 Valleyfair Dr Shakopee, MN',
-}
-posts = [testpost, testpost, testpost, testpost]
 
 @app.get("/")
 def load_home():
+    posts = get_posts()
     return render_template("home.html", posts=posts)
 
 @app.route("/logged")
