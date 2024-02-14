@@ -6,11 +6,26 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" 
       integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/header.css">
     {% endblock %}
   </head>
   <body>
-      <div id="menu-header" class="pure-menu pure-menu-horizontal">
-        <a href="/" class="pure-menu-heading pure-menu-link">Our Website</a>
+      <div class="header pure-menu pure-menu-horizontal">
+        {% block header %}
+        <a href="" class="pure-menu-heading">OUR WEBSITE</a>
+       
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item">
+                <a href="/" class="pure-menu-link">Home</a>
+            </li>
+            <li class="pure-menu-item">
+                <a href="/" class="pure-menu-link">Map</a>
+            </li>
+            <li class="pure-menu-item">
+                <a href="/" class="pure-menu-link">Messages</a>
+            </li>
+        </ul>
+        {% endblock %}
       </div>
       {% block content %}
       {% endblock %}

@@ -48,9 +48,16 @@ def logout():
         )
     )
 
+testpost = {'author': 'User',
+            'time': '11:20 PM',
+            'content': 'Filler Content',
+            'location': '1 Valleyfair Dr Shakopee, MN',
+}
+posts = [testpost, testpost, testpost, testpost]
+
 @app.get("/")
 def load_home():
-    return render_template("home.html")
+    return render_template("home.html", posts=posts)
 
 @app.route("/logged")
 def logged():

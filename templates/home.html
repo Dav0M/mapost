@@ -2,20 +2,41 @@
 {% block head %}
   {{ super() }}
   <title>Website Home</title>
-  <style>
-
-    .login-button {
-      position: absolute;
-      top: 10px;
-      right: 30px;
-      background-color: #e6e6e6;
-      color: rgb(0, 0, 0);
-    }
-
-  </style>
+{% endblock %}
+{% block header %}
+  {{  super() }}
+  <a href="/login" class="login-button pure-menu-link pure-button">Login</a>
 {% endblock %}
 {% block content %}
-  {{ super() }}
-    <a href="/login" class="login-button">Login</a>
+  <div id="layout" class="pure-g">
+    <div class="posts-grid pure-u-3-4">  
+        <div class="post-col-left pure-u-2-5">
+            {% for i in range(posts| length) %}
+                {% if i%2 == 0 %}
+                    <div class="post">
+                        <div class="post-author">{{ posts[i]['author'] }}</div>
+                        <div class="post-date">{{ posts[i]['time'] }}</div>
+                        <div class="post-content">{{ posts[i]['content'] }}</div>
+                        <div class="post-location">{{ posts[i]['location'] }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="post-col-right pure-u-2-5">
+            {% for i in range(posts| length) %}
+                {% if i%2 != 0 %}
+                    <div class="post">
+                        <div class="post-author">{{ posts[i]['author'] }}</div>
+                        <div class="post-date">{{ posts[i]['time'] }}</div>
+                        <div class="post-content">{{ posts[i]['content'] }}</div>
+                        <div class="post-location">{{ posts[i]['location'] }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+  </div>
 {% endblock %}
 
