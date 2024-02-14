@@ -34,11 +34,12 @@ def get_cursor(commit=False):
     finally:
         cursor.close()
 
-def add_entry(fd):
+def add_post():
     with get_cursor(True) as cur:
         current_app.logger.info("Adding post data")
+        cur.execute("insert into posts (author, content, place) values (%s, %s, %s)"), ('User', 'Filler Filler', '1 Valleyfair Dr Shakopee, MN')
     
-def get_entries():
+def get_posts():
     with get_cursor() as cur:
-        cur.execute("select * from entries")
+        cur.execute("select * from posts")
         return cur.fetchall()
