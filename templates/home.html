@@ -2,6 +2,7 @@
 {% block head %}
   {{ super() }}
   <title>Website Home</title>
+  <link rel="stylesheet" href="/static/feed.css">
 {% endblock %}
 {% block header %}
   {{  super() }}
@@ -17,6 +18,7 @@
                         <div class="post-author">{{ posts[i]['author'] }}</div>
                         <div class="post-date">{{ posts[i]['time'] }}</div>
                         <div class="post-content">{{ posts[i]['content'] }}</div>
+                        <div class="post-image"><img class="images" src="/static/sss.jpeg"></div>
                         <div class="post-location">{{ posts[i]['place'] }}</div>
                     </div>
                 {% endif %}
@@ -30,6 +32,7 @@
                         <div class="post-author">{{ posts[i]['author'] }}</div>
                         <div class="post-date">{{ posts[i]['time'] }}</div>
                         <div class="post-content">{{ posts[i]['content'] }}</div>
+                        <div class="post-image"><img class="images" src="/static/sss.jpeg"></div>
                         <div class="post-location">{{ posts[i]['place'] }}</div>
                     </div>
                 {% endif %}
