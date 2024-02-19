@@ -36,3 +36,7 @@
     height: 20em;
     margin-bottom: 10%;
 }
+.custom-search {
+    display: inline-block; 
+    margin-left: 1000px;
+  }
