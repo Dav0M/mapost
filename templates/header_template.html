@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" 
       integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/header.css">
+    <style>
+      .custom-search {
+        display: inline-block; 
+        margin-left: 1000px;
+      }
+    </style>
     {% endblock %}
   </head>
   <body>
@@ -25,6 +31,12 @@
                 <a href="/" class="pure-menu-link">Messages</a>
             </li>
         </ul>
+        <div class="custom-search">
+          <form class="pure-form" action = "post">
+            <input type="text" placeholder="Search">
+            <button type="submit" class="pure-button">Search</button>
+          </form>
+        </div>
         {% endblock %}
       </div>
       {% block content %}
@@ -33,7 +45,6 @@
 
 
   <script>
- src="https://maps.googleapis.com/maps/api/js?key=callback=initMap&libraries=places&v=weekly"
-            defer
+  
   </script>
 </html>
