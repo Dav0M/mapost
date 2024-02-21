@@ -63,8 +63,6 @@ def logout():
 @app.get("/")
 def load_home():
     posts = get_posts()
-    print(posts[0]['id'])
-    print(posts[0]['geog'])
     if session.get('user') is None:
         return render_template("home.html", posts=posts)
     else:
