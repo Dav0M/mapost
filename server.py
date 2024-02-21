@@ -66,3 +66,8 @@ def logged():
 @app.get("/user_home")
 def user_home():
     return render_template("user_home.html")
+
+
+@app.get("/search", methods=["POST"])
+def search_result():
+    return 
