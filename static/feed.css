@@ -48,12 +48,12 @@
 
 .post-image {
     object-fit: contain;
-    width: 100%;
+    width: 50%;
     height: auto;
 }
 
 .images {
-    width: 30%;
+    max-width: 100%;
     padding-left: 2em;
 }
 

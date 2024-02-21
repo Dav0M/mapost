@@ -11,7 +11,7 @@ create table posts2 (
     user_id int,
     content varchar(256),
     img bytea,
-    geog geography,
+    geog geography(point,4326),
     time timestamp with time zone not null default current_timestamp,
     foreign key (user_id) references users (id)
 );
@@ -22,3 +22,7 @@ create table users (
     email text,
     img text
 );
+
+select ST_AsText(geog) from posts2;
+
+select id, user_id, content, encode(img::bytea, 'base64') as "img", (ST_X(ST_AsText(geog)), ST_Y(ST_AsText(geog))) as "geog", time from posts2;

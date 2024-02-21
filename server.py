@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request, session,redirect, url_for
-import json, os
+import json, os, base64
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
@@ -63,6 +63,8 @@ def logout():
 @app.get("/")
 def load_home():
     posts = get_posts()
+    print(posts[0]['id'])
+    print(posts[0]['geog'])
     if session.get('user') is None:
         return render_template("home.html", posts=posts)
     else:
@@ -80,7 +82,8 @@ def create_post():
 def upload_post():
     fd = request.form
     img = request.files['image-input']
-    print(fd)
+    email = session["user"]["userinfo"]["email"]
+    id = get_userid(email)["id"]
     #print(img)
-    #add_post(fd, img)
+    add_post(fd, img, id)
     return redirect("/")
