@@ -36,7 +36,7 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     # print(token)
-    return redirect("logged")
+    return redirect("/")
 
 @app.route("/logout")
 def logout():
@@ -46,7 +46,7 @@ def logout():
         + "/v2/logout?"
         + urlencode(
             {
-                "returnTo": url_for("home", _external=True),
+                "returnTo": url_for("load_home", _external=True),
                 "client_id": env.get("AUTH0_CLIENT_ID"),
             },
             quote_via=quote_plus,
@@ -57,11 +57,10 @@ def logout():
 @app.get("/")
 def load_home():
     posts = get_posts()
-    return render_template("home.html", posts=posts)
-
-@app.route("/logged")
-def logged():
-    return render_template("home_logged.html")
+    if session.get('user') is None:
+        return render_template("home.html", posts=posts)
+    else:
+        return render_template("home_logged.html", posts=posts)
 
 @app.get("/user_home")
 def user_home():
