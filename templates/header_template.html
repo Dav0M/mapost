@@ -25,20 +25,14 @@
                 <a href="/" class="pure-menu-link">Messages</a>
             </li>
         </ul>
-        <div class="custom-search">
-          <form class="pure-form" action = "/search">
-            <input type="text" placeholder="Search">
-            <button type="submit" class="pure-button">Search</button>
-          </form>
+        <div class="pure-g, search-container">
+          <input type="text" class="pure-input-rounded, search-input" placeholder="Type here...">
+          <div class="search-dropdown"></div>
         </div>
         {% endblock %}
       </div>
       {% block content %}
       {% endblock %}
   </body>
-
-
-  <script>
-  
-  </script>
+  <script src="static/search.js"></script>
 </html>

@@ -88,6 +88,6 @@ def upload_post():
     add_post(fd, img, id)
     return redirect("/")
 
-@app.get("/search", methods=["POST"])
-def search_result():
-    return 
+# @app.get("/search", methods=["POST"])
+# def search_result():
+#     return 
