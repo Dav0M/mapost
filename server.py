@@ -1,10 +1,10 @@
 from flask import Flask, render_template, jsonify, request, session,redirect, url_for
-import json, os
+import json, os, base64
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 
-from data import add_post, get_posts, setup
+from data import *
 
 
 app = Flask(__name__)
@@ -35,8 +35,14 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
+    userinfo = session["user"]["userinfo"]
+    name = userinfo["name"]
+    email = userinfo["email"]
+    img = userinfo["picture"]
+    if (update_user(name,email,img) == 0):
+        add_user(name, email, img)
     # print(token)
-    return redirect("logged")
+    return redirect("/")
 
 @app.route("/logout")
 def logout():
@@ -46,7 +52,7 @@ def logout():
         + "/v2/logout?"
         + urlencode(
             {
-                "returnTo": url_for("home", _external=True),
+                "returnTo": url_for("load_home", _external=True),
                 "client_id": env.get("AUTH0_CLIENT_ID"),
             },
             quote_via=quote_plus,
@@ -57,16 +63,30 @@ def logout():
 @app.get("/")
 def load_home():
     posts = get_posts()
-    return render_template("home.html", posts=posts)
-
-@app.route("/logged")
-def logged():
-    return render_template("home_logged.html")
+    print(posts[0]['id'])
+    print(posts[0]['geog'])
+    if session.get('user') is None:
+        return render_template("home.html", posts=posts)
+    else:
+        return render_template("home_logged.html", posts=posts)
 
 @app.get("/user_home")
 def user_home():
     return render_template("user_home.html")
 
+@app.get("/create")
+def create_post():
+    return render_template("create.html")
+
+@app.post("/create")
+def upload_post():
+    fd = request.form
+    img = request.files['image-input']
+    email = session["user"]["userinfo"]["email"]
+    id = get_userid(email)["id"]
+    #print(img)
+    add_post(fd, img, id)
+    return redirect("/")
 
 @app.get("/search", methods=["POST"])
 def search_result():
