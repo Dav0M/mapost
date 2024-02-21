@@ -4,7 +4,7 @@ from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 
-from data import add_post, get_posts, setup
+from data import *
 
 
 app = Flask(__name__)
@@ -35,6 +35,12 @@ def login():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
+    userinfo = session["user"]["userinfo"]
+    name = userinfo["name"]
+    email = userinfo["email"]
+    img = userinfo["picture"]
+    if (update_user(name,email,img) == 0):
+        add_user(name, email, img)
     # print(token)
     return redirect("/")
 
@@ -69,3 +75,12 @@ def user_home():
 @app.get("/create")
 def create_post():
     return render_template("create.html")
+
+@app.post("/create")
+def upload_post():
+    fd = request.form
+    img = request.files['image-input']
+    print(fd)
+    #print(img)
+    #add_post(fd, img)
+    return redirect("/")

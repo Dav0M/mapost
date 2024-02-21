@@ -34,12 +34,29 @@ def get_cursor(commit=False):
     finally:
         cursor.close()
 
-def add_post():
+def add_post(fd, img):
     with get_cursor(True) as cur:
         current_app.logger.info("Adding post data")
+
+        imgData = img.read()
+        imgBin = psycopg2.Binary(imgData)
         cur.execute("insert into posts (author, content, place) values (%s, %s, %s)"), ('User', 'Filler Filler', '1 Valleyfair Dr Shakopee, MN')
     
 def get_posts():
     with get_cursor() as cur:
         cur.execute("select * from posts")
         return cur.fetchall()
+
+def get_userid(email):
+    with get_cursor() as cur:
+        cur.execute("select id from users where email=%s", (email))
+        return cur.fetchone()
+
+def add_user(name, email, img):
+    with get_cursor(True) as cur:
+        cur.execute("insert into users (name, email, img) values (%s,%s,%s)", (name, email, img))
+
+def update_user(name, email, img):
+    with get_cursor(True) as cur:
+        cur.execute("update users set name = %s, img = %s where email = %s", (name, img, email))
+        return cur.rowcount
