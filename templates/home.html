@@ -6,6 +6,12 @@
 {% endblock %}
 {% block content %}
   <div id="layout" class="pure-g">
+    <div class="pure-u-1 container">
+      <div class="search-container">
+        <input type="text" class="pure-input-rounded, search-input" placeholder="Type here...">
+        <div class="search-dropdown"></div>
+      </div>
+    </div>
     <div class="posts-grid pure-u-3-4">  
         <div class="post-col-left pure-u-2-5">
             {% for i in range(posts| length) %}

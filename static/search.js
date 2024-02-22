@@ -1,5 +1,5 @@
 const searchInput = document.querySelector('.search-input');
-  const searchDropdown = document.querySelector('.search-dropdown');
+const searchDropdown = document.querySelector('.search-dropdown');
 
   // Dummy data for demonstration
   const dummyData = [
@@ -24,7 +24,7 @@ function filterData(value) {
       `<div class="search-dropdown-item">${result}</div>`
     ).join('');
     searchDropdown.innerHTML = dropdownContent;
-    searchDropdown.style.display = results.length ? 'block' : 'none';
+    searchDropdown.style.display = results.length ? '' : 'none';
   }
 
   // Event listener for input keyup
