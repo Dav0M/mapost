@@ -10,29 +10,41 @@
     {% endblock %}
   </head>
   <body>
-      <div class="header pure-menu pure-menu-horizontal">
-        {% block header %}
-        <a href="" class="pure-menu-heading">OUR WEBSITE</a>
-       
-        <ul class="pure-menu-list">
-            <li class="pure-menu-item">
-                <a href="/" class="pure-menu-link">Home</a>
-            </li>
-            <li class="pure-menu-item">
-                <a href="/" class="pure-menu-link">Map</a>
-            </li>
-            <li class="pure-menu-item">
-                <a href="/" class="pure-menu-link">Messages</a>
-            </li>
-        </ul>
-        <div class="pure-g, search-container">
-          <input type="text" class="pure-input-rounded, search-input" placeholder="Type here...">
-          <div class="search-dropdown"></div>
+    <div class="pure-g header">
+      <div class="pure-u-1-3">
+        <div class="pure-menu pure-menu-horizontal">
+          <a href="" class="pure-menu-heading">OUR WEBSITE</a>
         </div>
-        {% endblock %}
       </div>
-      {% block content %}
-      {% endblock %}
+      <div class="pure-u-1-3 header-center">
+        <div class="pure-menu pure-menu-horizontal">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/" class="pure-menu-link">Map</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="pure-u-1-3 header-right">
+        <div class="pure-menu pure-menu-horizontal">
+          <ul class="pure-menu-list">
+            <li class="pure-menu-item search-container"> 
+              <input type="text" class="pure-input-rounded, search-input" placeholder="Type here...">
+              <div class="search-dropdown"></div>
+            </li>
+            <li class="pure-menu-item">
+            {% if session.user %}
+                <a href="/user_home" class="login-button pure-menu-link pure-button">{{ session.user.userinfo.name }}</a>
+              </li>
+            {% else %}
+                <a href="/login" class="login-button pure-menu-link pure-button">Login</a>
+              </li>
+            {% endif %}
+            </ul>  
+        </div>
+      </div>
+    </div>
+    {% block content %}
+    {% endblock %}
   </body>
   <script src="static/search.js"></script>
 </html>

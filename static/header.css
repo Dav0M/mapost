@@ -4,8 +4,14 @@
     padding-top: 1em;
 }
 
+.header-center {
+    text-align: center;
+}
+.header-right {
+    text-align: right;
+}
+
 .login-button {
-    float: right;
     color: white;
     background: rgb(66,184,221);
     border-radius: 4px;
@@ -36,14 +42,13 @@
     height: 20em;
     margin-bottom: 10%;
 }
+
 .search-container {
-    display: inline-block; 
-    margin-left: 1000px;
-  }
+ margin-right: 1em;
+}
 
-
-  .search-input {
-    padding: 10px 20px;
+.search-input {
+    padding: 0.5em 1em;
     width: calc(100% - 10px);
     border: none;
     border-radius: 25px;

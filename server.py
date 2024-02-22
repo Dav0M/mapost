@@ -3,6 +3,7 @@ import json, os, base64
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
+from functools import wraps
 
 from data import *
 
@@ -59,32 +60,37 @@ def logout():
         )
     )
 
+def require_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if session.get('user') is None:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated
 
 @app.get("/")
 def load_home():
     posts = get_posts()
-    if session.get('user') is None:
-        return render_template("home.html", posts=posts)
-    else:
-        return render_template("home_logged.html", posts=posts)
+    return render_template("home.html", posts=posts, session=session)
 
 @app.get("/user_home")
+@require_auth
 def user_home():
     return render_template("user_home.html")
 
-@app.get("/create")
+@app.route("/create", methods=['GET', 'POST'])
+@require_auth
 def create_post():
-    return render_template("create.html")
-
-@app.post("/create")
-def upload_post():
-    fd = request.form
-    img = request.files['image-input']
-    email = session["user"]["userinfo"]["email"]
-    id = get_userid(email)["id"]
-    #print(img)
-    add_post(fd, img, id)
-    return redirect("/")
+    if request.method == 'GET':
+        return render_template("create.html")
+    else:
+        fd = request.form
+        img = request.files['image-input']
+        email = session["user"]["userinfo"]["email"]
+        id = get_userid(email)["id"]
+        #print(img)
+        add_post(fd, img, id)
+        return redirect("/")
 
 # @app.get("/search", methods=["POST"])
 # def search_result():
