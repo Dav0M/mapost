@@ -61,7 +61,9 @@
                         <div class="post-author">{{ posts[i]['name'] }}</div>
                         <div class="post-date">{{ posts[i]['time'] }}</div>
                         <div class="post-content">{{ posts[i]['content'] }}</div>
-                        <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
+                        {% if posts[i].get('img') != '' %}
+                          <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
+                        {% endif %}
                         <div class="post-location">{{ posts[i]['geog'] }}</div>
                     </div>
                 {% endif %}
