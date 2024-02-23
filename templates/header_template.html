@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" 
       integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/css/header.css">
     {% endblock %}
   </head>
   <body>
@@ -32,7 +32,7 @@
           <ul class="pure-menu-list">
             <li class="pure-menu-item">
             {% if session.user %}
-                <a href="/user_home" class="login-button pure-menu-link pure-button">{{ session.user.userinfo.name }}</a>
+                <a href="/user_home" class="login-button pure-menu-link pure-button">{{ session.user.userinfo.nickname }}</a>
               </li>
             {% else %}
                 <a href="/login" class="login-button pure-menu-link pure-button">Login</a>
@@ -45,5 +45,4 @@
     {% block content %}
     {% endblock %}
   </body>
-  <script src="static/search.js"></script>
 </html>

@@ -42,11 +42,17 @@ def add_post(fd, img, id):
         cur.execute("""insert into posts2 (user_id, content, img, geog) values
          (%s, %s, %s, ST_MakePoint(%s,%s))""", (id, fd["create-text"], imgBin, fd["create-long"], fd["create-lat"]))
     
-def get_posts():
+def get_posts(fd=None):
     with get_cursor() as cur:
-        cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-         (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name from posts2 
-         inner join users on posts2.user_id=users.id;""")
+        if fd is None:
+            cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
+            (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name from posts2 
+            inner join users on posts2.user_id=users.id order by posts2.time desc""")
+        else:
+            cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
+            (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name from posts2 
+            inner join users on posts2.user_id=users.id 
+            order by ST_Distance(posts2.geog, ST_MakePoint(%s,%s))""", (fd["create-long"], fd["create-lat"]))
         return cur.fetchall()
 
 def get_userid(email):

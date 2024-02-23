@@ -37,7 +37,7 @@ def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
     userinfo = session["user"]["userinfo"]
-    name = userinfo["name"]
+    name = userinfo["nickname"]
     email = userinfo["email"]
     img = userinfo["picture"]
     if (update_user(name,email,img) == 0):
@@ -68,9 +68,12 @@ def require_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-@app.get("/")
+@app.route("/", methods=['GET', 'POST'])
 def load_home():
-    posts = get_posts()
+    if request.method == 'POST':
+        posts = get_posts(request.form)
+    else:
+        posts = get_posts()
     return render_template("home.html", posts=posts, session=session)
 
 @app.get("/user_home")

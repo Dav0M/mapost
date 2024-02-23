@@ -2,16 +2,41 @@
 {% block head %}
   {{ super() }}
   <title>Website Home</title>
-  <link rel="stylesheet" href="/static/feed.css">
+  <link rel="stylesheet" href="/static/css/feed.css">
+  <script src="/static/js/home.js"></script>
+  <script src="static/js/search.js" async></script>
 {% endblock %}
 {% block content %}
   <div id="layout" class="pure-g">
-    <div class="pure-u-1 container">
-      <div class="search-container">
-        <input type="text" class="pure-input-rounded, search-input" placeholder="Type here...">
-        <div class="search-dropdown"></div>
-      </div>
+    <div class="pure-menu pure-menu-horizontal feed-tools">
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+          <div class="container ">
+            <div class="search-container">
+              <input type="text" class="pure-input-rounded, search-input" placeholder="Type here...">
+              <div class="search-dropdown"></div>
+            </div>
+          </div>
+        </li>
+        <li class="pure-menu-item">
+          <a href="" class="pure-menu-heading">Sort By:</a>
+        </li>
+        <li class="pure-menu-item">
+          <a href="/" class="pure-menu-link">Recent</a>
+        </li>
+        <li class="pure-menu-item">
+          <form action="/", method="post" id="sort-form">
+            <label for="create-lat"></label>
+            <input type="hidden" id="create-lat" name="create-lat" value="0">
+  
+            <label for="create-long"></label>
+            <input type="hidden" id="create-long" name="create-long" value="0">
+            <button type="button" id="curr-location" class="sort-nearby pure-menu-link">Nearby</button>
+          </form>
+        </li>
+      </ul>
     </div>
+
     <div class="posts-grid pure-u-3-4">  
         <div class="post-col-left pure-u-2-5">
             {% for i in range(posts| length) %}
@@ -20,7 +45,9 @@
                         <div class="post-author">{{ posts[i]['name'] }}</div>
                         <div class="post-date">{{ posts[i]['time'] }}</div>
                         <div class="post-content">{{ posts[i]['content'] }}</div>
-                        <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
+                        {% if posts[i].get('img') != '' %}
+                          <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
+                        {% endif %}
                         <div class="post-location">{{ posts[i]['geog'] }}</div>
                     </div>
                 {% endif %}
