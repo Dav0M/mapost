@@ -32,7 +32,17 @@
           <ul class="pure-menu-list">
             <li class="pure-menu-item">
             {% if session.user %}
+              </li>
+              <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
                 <a href="/user_home" class="login-button pure-menu-link pure-button">{{ session.user.userinfo.name }}</a>
+                <ul class="pure-menu-children">
+                  <li class="pure-menu-item">
+                      <a href="/create" class="pure-menu-link">create</a>
+                  </li>
+                  <li class="pure-menu-item">
+                    <a href="/logout" class="pure-menu-link">log out</a>
+                </li>
+                </ul>
               </li>
             {% else %}
                 <a href="/login" class="login-button pure-menu-link pure-button">Login</a>
