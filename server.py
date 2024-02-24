@@ -1,5 +1,5 @@
-from flask import Flask, render_template, jsonify, request, session,redirect, url_for
-import json, os, base64
+from flask import Flask, render_template, jsonify, request, session,redirect, url_for, abort
+import json, os, base64, math
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
@@ -70,11 +70,21 @@ def require_auth(f):
 
 @app.route("/", methods=['GET', 'POST'])
 def load_home():
+    page = request.args.get('page', 1, type=int)
+    total = math.ceil( (get_total()['count'])/10 )
+    if page < 1 or page > total:
+        abort(404)
     if request.method == 'POST':
-        posts = get_posts(request.form)
+        session['location'] = request.form
     else:
-        posts = get_posts()
-    return render_template("home.html", posts=posts, session=session)
+        if request.args.get('recent') == 'true':
+            session.pop('location', None)
+    posts = get_posts(session.get('location', None), page)
+    return render_template("home.html", posts=posts, page=page, total=total)
+
+@app.get("/map")
+def load_map():
+    return render_template("map_main.html")
 
 @app.get("/user_home")
 @require_auth

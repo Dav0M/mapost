@@ -1,3 +1,7 @@
+.pages {
+    text-align: center;
+}
+
 .feed-tools {
     text-align: center;
 }
@@ -6,6 +10,11 @@
     border: none;
     cursor: pointer;
 }
+
+.active-sort {
+    background-color: lightgray;
+}
+
 .container {
     margin-left: auto;
     margin-right: auto;
@@ -106,13 +115,14 @@
 
 .post-image {
     object-fit: contain;
-    width: 50%;
+    max-width: 100%;
     height: auto;
 }
 
 .images {
-    max-width: 100%;
-    padding-left: 2em;
+    padding-left: 1em;
+    max-width: 70%;
+    height: auto;
 }
 
 .post-location {
@@ -120,5 +130,6 @@
     width: 100%;
     padding-top: 1em;
     margin-bottom: 1.5em;
+    word-break: break-all;
 }
 

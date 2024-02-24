@@ -37,3 +37,5 @@ select id, user_id, content, encode(img::bytea, 'base64') as "img", (ST_X(ST_AsT
 select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img", (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name from posts2 inner join users on posts2.user_id=users.id order by posts2.time desc;
 
 select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img", (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name from posts2 inner join users on posts2.user_id=users.id order by ST_Distance(posts2.geog,ST_MakePoint(%s,%s));
+
+select count(*) from posts2 inner join users on posts2.user_id=users.id;
