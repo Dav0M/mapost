@@ -89,7 +89,11 @@ def load_map():
 @app.get("/user_home")
 @require_auth
 def user_home():
-    return render_template("user_home.html")
+    page = request.args.get('page', 1, type=int)
+    posts = get_posts(session.get('location', None), page)
+    email = session["user"]["userinfo"]["email"]
+    id = get_userid(email)["id"]
+    return render_template("user_home.html", posts=posts, id=id)
 
 @app.route("/create", methods=['GET', 'POST'])
 @require_auth

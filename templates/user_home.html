@@ -9,24 +9,8 @@
   .username {
       position: fixed;
       top: 90px;
-      left: 330px;
+      left: 120px;
       font-size: 20px;
-  }
-  .following {
-      position: fixed;
-      top: 90px;
-      left: 650px;
-      font-size: 20px;
-      color: #000000;
-      text-decoration: none; 
-  }
-  .followers {
-      position: fixed;
-      top: 90px;
-      left: 810px;
-      font-size: 20px;
-      color: #000000;
-      text-decoration: none; 
   }
   .profile {
       line-height: 70px; 
@@ -41,15 +25,33 @@
       display: inline-block;
       position: fixed;
       top: 70px;
-      left: 240px;
+      left: 40px;
   }
 </style>
 </head>
 <body>
-<div class="username">username</div>
-<a href="/profile" class="profile">Profile</a>
-<a href="/following" class="following">following</a>
-<a href="/followers" class="followers">followers</a>
+  <div id="layout" class="pure-g">
+    <div class="pure-u-1-4 pure-u-md-1-4">
+      <div class="username">{{ session.user.userinfo.nickname }}</div>
+      <a href="/profile" class="profile">Profile</a>
+    </div>
 
+    <div class="posts-grid pure-u-3-4">
+      {% for post in posts %}
+        {% if post['user_id'] == id %}
+          <div class="post" id="{{ post.id }}">
+            <div class="post-author">{{ post['name'] }}</div>
+            <div class="post-date">{{ post['time'] }}</div>
+            <div class="post-content">{{ post['content'] }}</div>
+            {% if post.get('img') != '' %}
+            <div class="post-image"><img class="images" style="max-width: 100%;" src="data:image;base64,{{ post['img'] }}"></div>
+            {% endif %}
+            <div class="post-location">{{ post['geog'] }}</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
 </body>
 {% endblock %}
