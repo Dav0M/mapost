@@ -10,7 +10,7 @@ async function deletePost(node) {
 
     let data = {"id": postRow.id};
 
-    const response = await fetch("/api/post", {
+    const response = await fetch("/api/post/delete", {
         method: "DELETE",
         headers: {"Content-Type": "application/json",},
         body: JSON.stringify(data)

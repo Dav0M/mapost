@@ -48,14 +48,20 @@ def get_posts(fd=None, page=1):
         current_app.logger.info("Getting feed post data")
         if fd is None:
             cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-                (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img from posts2 
+                (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img from posts2 
                 inner join users on posts2.user_id=users.id order by posts2.time desc limit 10 offset %s""", ((page-1)*10,))
         else:
             cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-                (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img from posts2 
+                (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img from posts2 
                 inner join users on posts2.user_id=users.id 
                 order by ST_Distance(posts2.geog, ST_MakePoint(%s,%s)) limit 10 offset %s""", (fd["create-long"], fd["create-lat"], (page-1)*10))
         return cur.fetchall()
+
+def get_single_post(post_id,user_id):
+    with get_cursor() as cur:
+        current_app.logger.info("Getting single post data")
+        cur.execute("select content, ST_Y(ST_AsText(geog)) as lat, ST_X(ST_AsText(geog)) as long from posts2 where id=%s and user_id=%s",(post_id,user_id))
+        return cur.fetchone()
 
 """
 def get_userid(email):
@@ -90,7 +96,7 @@ def get_users_posts(user_id, page=1):
     with get_cursor() as cur:
         current_app.logger.info("Getting users post data")
         cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-            (ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img from posts2 
+            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img from posts2 
             inner join users on posts2.user_id=users.id where posts2.user_id=%s order by posts2.time desc limit 10 offset %s""", (user_id,(page-1)*10))
         return cur.fetchall()
 
@@ -100,12 +106,12 @@ def get_users_info(user_id):
         cur.execute("select * from users where id=%s", (user_id,))
         return cur.fetchone()
 
-def update_post(fd, img, post_id):
+def update_post(fd, img):
     with get_cursor(True) as cur:
         current_app.logger.info("Updating single post data")
         imgData = img.read()
         imgBin = psycopg2.Binary(imgData)
-        cur.execute("update posts2 set content=%s, img=%s, geog=ST_MakePoint(%s,%s) where id=%s", (fd['create-text'], imgBin, fd["create-long"], fd["create-lat"], post_id))
+        cur.execute("update posts2 set content=%s, img=%s, geog=ST_MakePoint(%s,%s), time=current_timestamp where id=%s", (fd['create-text'], imgBin, fd["create-long"], fd["create-lat"], fd['post-id']))
         return cur.rowcount
 
 def delete_post(post_id, user_id):

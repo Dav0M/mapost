@@ -118,12 +118,17 @@ def create_post():
 @app.get("/edit/<int:user_id>")
 @require_auth
 def edit_post(user_id):
+    if session['user_id']['id'] != user_id:
+        abort(404) #not authorized
     post_id = request.args.get('post', -1, type=int)
-    return render_template("edit_post.html")
+    post = get_single_post(post_id, user_id)
+    if post is None:
+        abort(404) #post doesnt exist or not yours
+    return render_template("edit_post.html", post=post, post_id=post_id)
 
-@app.route("/api/post", methods=['POST', 'DELETE'])
+@app.route("/api/post/delete", methods=['DELETE'])
 @require_auth
-def del_user_post():
+def delete_user_post():
     post_id = request.json['id']
     if delete_post(post_id, session['user_id']['id']) == 0:
         resp = make_response("Invalid request", 400)
@@ -131,6 +136,14 @@ def del_user_post():
         resp = make_response("Row deleted", 200)
     resp.headers['Content-Type'] = "text/plain"
     return resp
+
+@app.post("/api/post/edit")
+@require_auth
+def edit_user_post():
+    fd = request.form
+    img = request.files['image-input']
+    update_post(fd, img)
+    return redirect("/")
 
 
 # @app.get("/search", methods=["POST"])
