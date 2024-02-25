@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, session,redirect, url_for, abort
+from flask import Flask, render_template, jsonify, request, session,redirect, url_for, abort, make_response
 import json, os, base64, math
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
@@ -40,9 +40,10 @@ def callback():
     name = userinfo["nickname"]
     email = userinfo["email"]
     img = userinfo["picture"]
-    if (update_user(name,email,img) == 0):
-        add_user(name, email, img)
-    # print(token)
+    user_id = update_user(name, email, img)
+    if (user_id is None):
+        user_id = add_user(name, email, img)
+    session["user_id"] = user_id
     return redirect("/")
 
 @app.route("/logout")
@@ -95,6 +96,13 @@ def user_home():
     id = get_userid(email)["id"]
     return render_template("user_home.html", posts=posts, id=id)
 
+@app.get("/user/<int:user_id>")
+def show_user_profile(user_id):
+    posts = get_users_posts(user_id)
+    user = get_users_info(user_id)
+    return render_template("user_home.html", posts=posts, user=user)
+    
+
 @app.route("/create", methods=['GET', 'POST'])
 @require_auth
 def create_post():
@@ -103,11 +111,27 @@ def create_post():
     else:
         fd = request.form
         img = request.files['image-input']
-        email = session["user"]["userinfo"]["email"]
-        id = get_userid(email)["id"]
-        #print(img)
-        add_post(fd, img, id)
+        user_id = session["user_id"]["id"]
+        add_post(fd, img, user_id)
         return redirect("/")
+
+@app.get("/edit/<int:user_id>")
+@require_auth
+def edit_post(user_id):
+    post_id = request.args.get('post', -1, type=int)
+    return render_template("edit_post.html")
+
+@app.route("/api/post", methods=['POST', 'DELETE'])
+@require_auth
+def del_user_post():
+    post_id = request.json['id']
+    if delete_post(post_id, session['user_id']['id']) == 0:
+        resp = make_response("Invalid request", 400)
+    else:
+        resp = make_response("Row deleted", 200)
+    resp.headers['Content-Type'] = "text/plain"
+    return resp
+
 
 # @app.get("/search", methods=["POST"])
 # def search_result():

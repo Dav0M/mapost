@@ -1,10 +1,12 @@
 {% extends "header_template.html" %}
 {% block head %}
   {{ super() }}
-  <title>Website Home</title>
-  <link rel="stylesheet" href="/static/feed.css">
+  <title> {{ user.name }}'s Profile </title>
+  <link rel="stylesheet" href="/static/css/user_home.css">
+  <script src="/static/js/delete.js"></script>
 {% endblock %}
 {% block content %}
+<!--
 <style>
   .username {
       position: fixed;
@@ -27,9 +29,48 @@
       top: 70px;
       left: 40px;
   }
-</style>
-</head>
-<body>
+</style> -->
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <div class="pure-g user-info">
+        <div class="pure-u">
+          <img width="64" height="64" class="user-img" src="{{ user.img }}">
+        </div>
+        <div class="pure-u">
+          <h1 class="user-name">{{user.name}}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="post-list pure-u-3-5">
+      <div class="pure-g">
+        {% for post in posts %}
+          <div class="post-row pure-u-1" id="{{ post['id'] }}">
+            <div class="pure-g">
+              <div class="post pure-u-3-5">
+                <div class="post-author-img"><img class="author-img" src="{{ post['user_img'] }}"></div>
+                <div class="post-author"><a href="/user/{{ post['user_id'] }}">{{ post['name'] }}</a></div>
+                <div class="post-date">{{ post['time'] }}</div>
+                <div class="post-content">{{ post['content'] }}</div>
+                {% if post.get('img') != '' %}
+                  <div class="post-image"><img class="images" src="data:image;base64,{{ post['img'] }}"></div>
+                {% endif %}
+                <div class="post-location">{{ post['geog'] }}</div>
+              </div>
+              {% if user.id == session.user_id.id %}
+                <div class="pure-u edit-button">
+                  <a class="pure-button" href="/edit/{{ user.id }}?post={{ post['id'] }}">Edit</a>
+                </div>
+                <div class="pure-u">
+                  <button type="button" class="pure-button delete-button">Delete</button>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <!-- 
   <div id="layout" class="pure-g">
     <div class="pure-u-1-4 pure-u-md-1-4">
       <div class="username">{{ session.user.userinfo.nickname }}</div>
@@ -38,20 +79,18 @@
 
     <div class="posts-grid pure-u-3-4">
       {% for post in posts %}
-        {% if post['user_id'] == id %}
-          <div class="post" id="{{ post.id }}">
-            <div class="post-author">{{ post['name'] }}</div>
-            <div class="post-date">{{ post['time'] }}</div>
-            <div class="post-content">{{ post['content'] }}</div>
-            {% if post.get('img') != '' %}
-            <div class="post-image"><img class="images" style="max-width: 100%;" src="data:image;base64,{{ post['img'] }}"></div>
-            {% endif %}
-            <div class="post-location">{{ post['geog'] }}</div>
-          </div>
-        {% endif %}
+
+        <div class="post" id="{{ post.id }}">
+          <div class="post-author">{{ post['name'] }}</div>
+          <div class="post-date">{{ post['time'] }}</div>
+          <div class="post-content">{{ post['content'] }}</div>
+          {% if post.get('img') != '' %}
+          <div class="post-image"><img class="images" style="max-width: 100%;" src="data:image;base64,{{ post['img'] }}"></div>
+          {% endif %}
+          <div class="post-location">{{ post['geog'] }}</div>
+        </div>
       {% endfor %}
     </div>
 
-  </div>
-</body>
+  </div> -->
 {% endblock %}

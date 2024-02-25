@@ -4,7 +4,7 @@
   <title>Website Home</title>
   <link rel="stylesheet" href="/static/css/feed.css">
   <script src="/static/js/home.js"></script>
-  <script src="static/js/search.js" async></script>
+  <script src="/static/js/search.js" async></script>
 {% endblock %}
 {% block content %}
   <div id="layout" class="pure-g">
@@ -43,7 +43,7 @@
               {% if i%2 == 0 %}
                   <div class="post" id="{{ posts[i].id }}">
                     <div class="post-author-img"><img class="author-img" src="{{ posts[i]['user_img'] }}"></div>
-                    <div class="post-author">{{ posts[i]['name'] }}</div>
+                    <div class="post-author"><a href="/user/{{ posts[i]['user_id'] }}">{{ posts[i]['name'] }}</a></div>
                     <div class="post-date">{{ posts[i]['time'] }}</div>
                     <div class="post-content">{{ posts[i]['content'] }}</div>
                     {% if posts[i].get('img') != '' %}
@@ -60,7 +60,7 @@
           {% if i%2 != 0 %}
             <div class="post" id="{{ posts[i]['id'] }}">
               <div class="post-author-img"><img class="author-img" src="{{ posts[i]['user_img'] }}"></div>
-              <div class="post-author">{{ posts[i]['name'] }}</div>
+              <div class="post-author"><a href="/user/{{ posts[i]['user_id'] }}">{{ posts[i]['name'] }}</a></div>
               <div class="post-date">{{ posts[i]['time'] }}</div>
               <div class="post-content">{{ posts[i]['content'] }}</div>
               {% if posts[i].get('img') != '' %}
