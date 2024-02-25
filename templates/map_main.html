@@ -1,0 +1,364 @@
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/offset-vanishing-point-with-padding/ -->
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/ -->
+<!-- All types of MapBox icons: -->
+<!-- https://labs.mapbox.com/maki-icons/ -->
+<!-- MapBox icon size and image change -->
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/add-image/ -->
+<!-- MapBox change basemap style -->
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/setstyle/ -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Offset the vanishing point using padding</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <style>
+        #basemap-menu {
+            position: absolute;
+            background: #efefef;
+            padding: 10px;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .rounded-rect {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 50px -25px black;
+        }
+
+        .flex-center {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flex-center.left {
+            left: 0px;
+        }
+
+        .flex-center.right {
+            right: 0px;
+        }
+
+        .sidebar-content {
+            position: absolute;
+            width: 95%;
+            height: 95%;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 32px;
+            color: gray;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            width: 1.3em;
+            height: 1.3em;
+            overflow: visible;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sidebar-toggle.left {
+            right: -1.5em;
+        }
+
+        .sidebar-toggle.right {
+            left: -1.5em;
+        }
+
+        .sidebar-toggle:hover {
+            color: #0aa1cf;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            transition: transform 1s;
+            z-index: 1;
+            width: 300px;
+            height: 100%;
+        }
+
+        /*
+  The sidebar styling has them "expanded" by default, we use CSS transforms to push them offscreen
+  The toggleSidebar() function removes this class from the element in order to expand it.
+*/
+        .left.collapsed {
+            transform: translateX(-295px);
+        }
+
+        .right.collapsed {
+            transform: translateX(295px);
+        }
+
+
+        .item {
+            margin-bottom: 10px;
+        }
+
+        .item-row {
+            display: flex;
+        }
+    </style>
+
+    <div id="map">
+        <div id="left" class="sidebar flex-center left collapsed">
+            <div class="sidebar-content rounded-rect" id="content">
+
+                <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
+                    &rarr;
+                </div>
+            </div>
+        </div>
+        <div id="right" class="sidebar flex-center right collapsed">
+            <div class="sidebar-content rounded-rect flex-center">
+                Right Sidebar
+                <div class="sidebar-toggle rounded-rect right" onclick="toggleSidebar('right')">
+                    &larr;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="basemap-menu">
+
+        <input id="light-v11" type="radio" name="rtoggle" value="light" checked="checked">
+        <label for="light-v11">light</label>
+        <input id="dark-v11" type="radio" name="rtoggle" value="dark">
+        <label for="dark-v11">dark</label>
+        <input id="streets-v12" type="radio" name="rtoggle" value="streets">
+        <label for="streets-v12">streets</label>
+        <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite">
+        <!-- See a list of Mapbox-hosted public styles at -->
+        <!-- https://docs.mapbox.com/api/maps/styles/#mapbox-styles -->
+        <label for="satellite-streets-v12">satellite streets</label>
+    </div>
+
+    <script>
+
+
+
+        function getallLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(getPosition);
+            } else {
+                alert("device not supported location");
+            }
+        }
+
+        function getPosition(position) {
+
+
+
+            //get my curr location
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            console.log("latitude: " + latitude)
+            console.log("longitude: " + longitude)
+
+            mapboxgl.accessToken = 'pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2tpemtwbHVmMDRlZjJ6bG53N3N0YnZwaSJ9.4KAgha3tGP30JElI6rzzuQ';
+            const center = [longitude, latitude];
+            const map = new mapboxgl.Map({
+                container: 'map',
+                zoom: 12.5,
+                center: center,
+                pitch: 60,
+
+                style: 'mapbox://styles/mapbox/light-v11'
+            });
+
+
+            new mapboxgl.Marker().setLngLat(center).addTo(map);
+
+
+            // features = [];
+
+            fetch('/showlocations')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+
+                    features = []
+                    var Content = document.getElementById('content');
+
+                    for (let i = 0; i < data.length; i++) {
+                        let item = data[i];
+
+
+                        var newItemDiv = document.createElement('div');
+                        newItemDiv.classList.add('item');
+                        newItemDiv.innerHTML = `
+                            <div class="item-row">
+                                <div>${item.user_id}</div>
+                                <br />
+                                <div>${item.post_detail}</div>
+                                <br />
+                            </div>
+                            <br />
+                            `;
+                        Content.appendChild(newItemDiv);
+
+
+                        let feature = {
+                            'type': 'Feature',
+                            'properties': {
+                                'description': '<strong>' + item.user_id + '</strong><p>' + item.post_detail + '</p>',
+                                'icon': 'attraction'
+                            },
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [item.longitude, item.latitude]
+                            }
+                        };
+                        features.push(feature);
+                    }
+
+                    geojson_data = {
+                        'type': 'FeatureCollection',
+                        'features': features
+                    }
+
+                    console.log(features);
+                    addAdditionalSourceAndLayer()
+
+
+                    // When a click event occurs on a feature in the places layer, open a popup at the
+                    // location of the feature, with description HTML from its properties.
+                    map.on('click', 'placesLayer', (e) => {
+                        // Copy coordinates array.
+                        const coordinates = e.features[0].geometry.coordinates.slice();
+                        const description = e.features[0].properties.description;
+
+                        // Ensure that if the map is zoomed out such that multiple
+                        // copies of the feature are visible, the popup appears
+                        // over the copy being pointed to.
+                        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                        }
+
+                        new mapboxgl.Popup()
+                            .setLngLat(coordinates)
+                            .setHTML(description)
+                            .addTo(map);
+                    });
+
+                    // Change the cursor to a pointer when the mouse is over the places layer.
+                    map.on('mouseenter', 'placesLayer', () => {
+                        map.getCanvas().style.cursor = 'pointer';
+                    });
+
+                    // Change it back to a pointer when it leaves.
+                    map.on('mouseleave', 'placesLayer', () => {
+                        map.getCanvas().style.cursor = '';
+                    });
+
+                })
+                .catch(error => console.error('Error:', error));
+
+
+
+            // Add user posts to the map every time the base map style is loaded 
+            function addAdditionalSourceAndLayer() {
+                console.log(geojson_data);
+
+
+                map.addSource('placesSource', {
+                    'type': 'geojson',
+                    'data': geojson_data
+                })
+
+                map.addLayer({
+                    'id': 'placesLayer',
+                    'type': 'symbol',
+                    'source': 'placesSource',
+                    'layout': {
+                        'icon-image': ['get', 'icon'],
+                        'icon-size': 2.50,
+                        'icon-allow-overlap': true
+                    }
+                });
+
+            }
+
+
+            // Get the basemap choice from radio button
+            const layerList = document.getElementById('basemap-menu');
+            const inputs = layerList.getElementsByTagName('input');
+
+            //change basemap based on the radio button choice
+            for (const input of inputs) {
+                input.onclick = (layer) => {
+                    const layerId = layer.target.id;
+                    map.setStyle('mapbox://styles/mapbox/' + layerId);
+
+                    // Add source and layer whenever base style is loaded
+                    map.on('style.load', () => {
+                        addAdditionalSourceAndLayer();
+                    });
+                };
+            }
+
+
+
+        }
+        window.onload = function () {
+            getallLocation();
+        };
+
+
+
+
+
+
+
+
+
+        function toggleSidebar(id) {
+            const elem = document.getElementById(id);
+            // Add or remove the 'collapsed' CSS class from the sidebar element.
+            // Returns boolean "true" or "false" whether 'collapsed' is in the class list.
+            const collapsed = elem.classList.toggle('collapsed');
+            const padding = {};
+            // 'id' is 'right' or 'left'. When run at start, this object looks like: '{left: 300}';
+            padding[id] = collapsed ? 0 : 300; // 0 if collapsed, 300 px if not. This matches the width of the sidebars in the .sidebar CSS class.
+            // Use `map.easeTo()` with a padding option to adjust the map's center accounting for the position of sidebars.
+            map.easeTo({
+                padding: padding,
+                duration: 1000 // In ms. This matches the CSS transition duration property.
+            });
+        }
+
+        map.on('load', () => {
+            toggleSidebar('left');
+        });
+
+
+
+    </script>
+
+</body>
+
+</html>
