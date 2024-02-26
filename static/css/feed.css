@@ -60,6 +60,14 @@
     background-color: #e9f3ff;
 }
 
+.search-dropdown-item span {
+    display: inline-block;
+    max-width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
 .posts-grid {
     display: flex;
     background-color: rgb(238, 234, 234);

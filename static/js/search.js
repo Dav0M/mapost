@@ -18,7 +18,7 @@ function fetchSearchResults(searchTerm) {
   // Function to update dropdown with filtered results
   function updateDropdown(results) {
     const dropdownContent = results.map(result =>
-      `<div class="search-dropdown-item">${truncateText(result)}</div>`
+      `<div class="search-dropdown-item"><span>${result}</span></div>`
     ).join('');
     searchDropdown.innerHTML = dropdownContent;
     searchDropdown.style.display = results.length ? '' : 'none';
