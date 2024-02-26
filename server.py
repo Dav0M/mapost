@@ -112,6 +112,10 @@ def load_home():
     posts = get_posts(session.get('location', None), page)
     return render_template("home.html", posts=posts, page=page, total=total)
 
+@app.get("/map")
+def load_map():
+    return render_template("map_main.html")
+
 @app.get("/user/<int:user_id>")
 def show_user_profile(user_id):
     page = request.args.get('page', 1, type=int)
