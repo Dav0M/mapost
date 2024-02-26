@@ -41,6 +41,68 @@
             font-family: 'Open Sans', sans-serif;
         }
 
+        .mapboxgl-popup {
+            font:
+                14px/24px 'Helvetica Neue',
+                Arial,
+                Helvetica,
+                sans-serif;
+            width: 400px;
+            height: 300px;
+            /* top: 0; */
+            /* left: 0; */
+            overflow-x: auto;
+            overflow-y: scroll;
+
+
+            display: flex;
+            box-sizing: border-box;
+            margin: 0 auto;
+            /* margin-bottom: 0.14rem;
+            padding: 0.2rem 0;
+            width: calc(100vw - 0.32rem); */
+            border-radius: 0.4rem;
+            background-color: #FFF;
+
+        }
+
+        .mapboxgl-popup {
+            font:
+                14px/24px 'Helvetica Neue',
+                Arial,
+                Helvetica,
+                sans-serif;
+            width: 400px;
+            height: 300px;
+            /* top: 0; */
+            /* left: 0; */
+            overflow-x: auto;
+            overflow-y: scroll;
+
+
+            display: flex;
+            box-sizing: border-box;
+            margin: 0 auto;
+            /* margin-bottom: 0.14rem;
+            padding: 0.2rem 0;
+            width: calc(100vw - 0.32rem); */
+            border-radius: 0.4rem;
+            background-color: #FFF;
+
+        }
+
+        .mapboxgl-popup popup-main {
+            width: 1.6rem;
+            background: gold;
+            display: flex;
+            overflow: hidden;
+            flex-direction: column-reverse;
+            min-height: 70px;
+            border-radius: 0.34rem;
+        }
+
+
+
         .rounded-rect {
             background: white;
             border-radius: 10px;
@@ -214,7 +276,7 @@
                             <div class="item-row">
                                 <div>${item.user_id}</div>
                                 <br />
-                                <div>${item.post_detail}</div>
+                                <div>${item.content}</div>
                                 <br />
                             </div>
                             <br />
@@ -225,7 +287,22 @@
                         let feature = {
                             'type': 'Feature',
                             'properties': {
-                                'description': '<strong>' + item.user_id + '</strong><p>' + item.post_detail + '</p>',
+                                'description': `
+                                    <div class="mapboxgl-popup">
+                                        <div><strong>${item.user_id}</strong></div>
+
+                                        <div class="popup-main">
+                                            <div class="popup-left">
+                                                <img src="data:image/jpeg;base64,${item.img}">"
+                                            </div>
+                                            <div class="popup-right">
+                                                <p>${item.content}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="popup-bottom"><p>${item.time}</p></div>
+                                    </div>
+                                    `,
                                 'icon': 'attraction'
                             },
                             'geometry': {
