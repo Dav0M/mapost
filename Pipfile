@@ -9,6 +9,7 @@ gunicorn = "*"
 psycopg2-binary = "*"
 authlib = "*"
 requests = "*"
+sqlalchemy-bigquery = "*"
 
 [dev-packages]
 
