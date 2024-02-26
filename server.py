@@ -112,15 +112,6 @@ def load_home():
     posts = get_posts(session.get('location', None), page)
     return render_template("home.html", posts=posts, page=page, total=total)
 
-@app.get("/user_home")
-@require_auth
-def user_home():
-    page = request.args.get('page', 1, type=int)
-    posts = get_posts(session.get('location', None), page)
-    email = session["user"]["userinfo"]["email"]
-    id = get_userid(email)["id"]
-    return render_template("user_home.html", posts=posts, id=id)
-
 @app.get("/user/<int:user_id>")
 def show_user_profile(user_id):
     page = request.args.get('page', 1, type=int)
