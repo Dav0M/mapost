@@ -258,6 +258,18 @@
             "markers": "python_version >= '3.8'",
             "version": "==3.0.2"
         },
+<<<<<<< HEAD
+=======
+        "flask-sqlalchemy": {
+            "hashes": [
+                "sha256:c5765e58ca145401b52106c0f46178569243c5da25556be2c231ecc60867c5b1",
+                "sha256:cabb6600ddd819a9f859f36515bb1bd8e7dbf30206cc679d2b081dff9e383283"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.7'",
+            "version": "==3.0.5"
+        },
+>>>>>>> test
         "google-api-core": {
             "hashes": [
                 "sha256:610c5b90092c360736baccf17bd3efbcb30dd380e7a6dc28a71059edb8bd0d8e",
