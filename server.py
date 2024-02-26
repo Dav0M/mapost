@@ -1,5 +1,5 @@
-from flask import Flask, render_template, jsonify, request, session,redirect, url_for, abort, make_response
-import json, os, base64, math
+from flask import Flask, render_template, jsonify, request, session,redirect, url_for
+import json, os, base64
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
@@ -40,10 +40,9 @@ def callback():
     name = userinfo["nickname"]
     email = userinfo["email"]
     img = userinfo["picture"]
-    user_id = update_user(name, email, img)
-    if (user_id is None):
-        user_id = add_user(name, email, img)
-    session["user_id"] = user_id
+    if (update_user(name,email,img) == 0):
+        add_user(name, email, img)
+    # print(token)
     return redirect("/")
 
 @app.route("/logout")
@@ -71,42 +70,16 @@ def require_auth(f):
 
 @app.route("/", methods=['GET', 'POST'])
 def load_home():
-    page = request.args.get('page', 1, type=int)
-    total = math.ceil( (get_total()['count'])/10 )
-    if page < 1 or page > total:
-        abort(404) #invalid page number
     if request.method == 'POST':
-        session['location'] = request.form
+        posts = get_posts(request.form)
     else:
-        if request.args.get('recent') == 'true':
-            session.pop('location', None)
-    posts = get_posts(session.get('location', None), page)
-    return render_template("home.html", posts=posts, page=page, total=total)
-
-@app.get("/map")
-def load_map():
-    return render_template("map_main.html")
+        posts = get_posts()
+    return render_template("home.html", posts=posts, session=session)
 
 @app.get("/user_home")
 @require_auth
 def user_home():
-    page = request.args.get('page', 1, type=int)
-    posts = get_posts(session.get('location', None), page)
-    email = session["user"]["userinfo"]["email"]
-    id = get_userid(email)["id"]
-    return render_template("user_home.html", posts=posts, id=id)
-
-@app.get("/user/<int:user_id>")
-def show_user_profile(user_id):
-    page = request.args.get('page', 1, type=int)
-    total = math.ceil( (get_total(user_id)['count'])/10 )
-    if total == 0: total = 1
-    if page < 1 or page > total:
-        abort(404) #invalid page number
-    posts = get_users_posts(user_id, page)
-    user = get_users_info(user_id)
-    return render_template("user_home.html", posts=posts, user=user, page=page, total=total)
-    
+    return render_template("user_home.html")
 
 @app.route("/create", methods=['GET', 'POST'])
 @require_auth
@@ -116,8 +89,10 @@ def create_post():
     else:
         fd = request.form
         img = request.files['image-input']
-        user_id = session["user_id"]["id"]
-        add_post(fd, img, user_id)
+        email = session["user"]["userinfo"]["email"]
+        id = get_userid(email)["id"]
+        #print(img)
+        add_post(fd, img, id)
         return redirect("/")
 
 @app.get("/edit/<int:user_id>")
