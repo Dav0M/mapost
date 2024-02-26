@@ -1,11 +1,5 @@
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/offset-vanishing-point-with-padding/ -->
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/ -->
-<!-- All types of MapBox icons: -->
-<!-- https://labs.mapbox.com/maki-icons/ -->
-<!-- MapBox icon size and image change -->
-<!-- https://docs.mapbox.com/mapbox-gl-js/example/add-image/ -->
-<!-- MapBox change basemap style -->
-<!-- https://docs.mapbox.com/mapbox-gl-js/example/setstyle/ -->
 <!DOCTYPE html>
 <html>
 
@@ -14,8 +8,6 @@
     <title>Offset the vanishing point using padding</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
     <style>
         body {
@@ -34,75 +26,6 @@
 
 <body>
     <style>
-        #basemap-menu {
-            position: absolute;
-            background: #efefef;
-            padding: 10px;
-            font-family: 'Open Sans', sans-serif;
-        }
-
-        .mapboxgl-popup {
-            font:
-                14px/24px 'Helvetica Neue',
-                Arial,
-                Helvetica,
-                sans-serif;
-            width: 400px;
-            height: 300px;
-            /* top: 0; */
-            /* left: 0; */
-            overflow-x: auto;
-            overflow-y: scroll;
-
-
-            display: flex;
-            box-sizing: border-box;
-            margin: 0 auto;
-            /* margin-bottom: 0.14rem;
-            padding: 0.2rem 0;
-            width: calc(100vw - 0.32rem); */
-            border-radius: 0.4rem;
-            background-color: #FFF;
-
-        }
-
-        .mapboxgl-popup {
-            font:
-                14px/24px 'Helvetica Neue',
-                Arial,
-                Helvetica,
-                sans-serif;
-            width: 400px;
-            height: 300px;
-            /* top: 0; */
-            /* left: 0; */
-            overflow-x: auto;
-            overflow-y: scroll;
-
-
-            display: flex;
-            box-sizing: border-box;
-            margin: 0 auto;
-            /* margin-bottom: 0.14rem;
-            padding: 0.2rem 0;
-            width: calc(100vw - 0.32rem); */
-            border-radius: 0.4rem;
-            background-color: #FFF;
-
-        }
-
-        .mapboxgl-popup popup-main {
-            width: 1.6rem;
-            background: gold;
-            display: flex;
-            overflow: hidden;
-            flex-direction: column-reverse;
-            min-height: 70px;
-            border-radius: 0.34rem;
-        }
-
-
-
         .rounded-rect {
             background: white;
             border-radius: 10px;
@@ -174,21 +97,12 @@
         .right.collapsed {
             transform: translateX(295px);
         }
-
-
-        .item {
-            margin-bottom: 10px;
-        }
-
-        .item-row {
-            display: flex;
-        }
     </style>
 
     <div id="map">
         <div id="left" class="sidebar flex-center left collapsed">
-            <div class="sidebar-content rounded-rect" id="content">
-
+            <div class="sidebar-content rounded-rect flex-center">
+                Left Sidebar
                 <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
                     &rarr;
                 </div>
@@ -204,214 +118,19 @@
         </div>
     </div>
 
-    <div id="basemap-menu">
-
-        <input id="light-v11" type="radio" name="rtoggle" value="light" checked="checked">
-        <label for="light-v11">light</label>
-        <input id="dark-v11" type="radio" name="rtoggle" value="dark">
-        <label for="dark-v11">dark</label>
-        <input id="streets-v12" type="radio" name="rtoggle" value="streets">
-        <label for="streets-v12">streets</label>
-        <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite">
-        <!-- See a list of Mapbox-hosted public styles at -->
-        <!-- https://docs.mapbox.com/api/maps/styles/#mapbox-styles -->
-        <label for="satellite-streets-v12">satellite streets</label>
-    </div>
-
     <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2tpemtwbHVmMDRlZjJ6bG53N3N0YnZwaSJ9.4KAgha3tGP30JElI6rzzuQ';
+        const center = [-77.01866, 38.888];
+        const map = new mapboxgl.Map({
+            container: 'map',
+            zoom: 12.5,
+            center: center,
+            pitch: 60,
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/streets-v12'
+        });
 
-
-
-        function getallLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(getPosition);
-            } else {
-                alert("device not supported location");
-            }
-        }
-
-        function getPosition(position) {
-
-
-
-            //get my curr location
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-
-            console.log("latitude: " + latitude)
-            console.log("longitude: " + longitude)
-
-            mapboxgl.accessToken = 'pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2tpemtwbHVmMDRlZjJ6bG53N3N0YnZwaSJ9.4KAgha3tGP30JElI6rzzuQ';
-            const center = [longitude, latitude];
-            const map = new mapboxgl.Map({
-                container: 'map',
-                zoom: 12.5,
-                center: center,
-                pitch: 60,
-
-                style: 'mapbox://styles/mapbox/light-v11'
-            });
-
-
-            new mapboxgl.Marker().setLngLat(center).addTo(map);
-
-
-            // features = [];
-
-            fetch('/showlocations')
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-
-                    features = []
-                    var Content = document.getElementById('content');
-
-                    for (let i = 0; i < data.length; i++) {
-                        let item = data[i];
-
-
-                        var newItemDiv = document.createElement('div');
-                        newItemDiv.classList.add('item');
-                        newItemDiv.innerHTML = `
-                            <div class="item-row">
-                                <div>${item.user_id}</div>
-                                <br />
-                                <div>${item.content}</div>
-                                <br />
-                            </div>
-                            <br />
-                            `;
-                        Content.appendChild(newItemDiv);
-
-
-                        let feature = {
-                            'type': 'Feature',
-                            'properties': {
-                                'description': `
-                                    <div class="mapboxgl-popup">
-                                        <div><strong>${item.user_id}</strong></div>
-
-                                        <div class="popup-main">
-                                            <div class="popup-left">
-                                                <img src="data:image/jpeg;base64,${item.img}">"
-                                            </div>
-                                            <div class="popup-right">
-                                                <p>${item.content}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="popup-bottom"><p>${item.time}</p></div>
-                                    </div>
-                                    `,
-                                'icon': 'attraction'
-                            },
-                            'geometry': {
-                                'type': 'Point',
-                                'coordinates': [item.longitude, item.latitude]
-                            }
-                        };
-                        features.push(feature);
-                    }
-
-                    geojson_data = {
-                        'type': 'FeatureCollection',
-                        'features': features
-                    }
-
-                    console.log(features);
-                    addAdditionalSourceAndLayer()
-
-
-                    // When a click event occurs on a feature in the places layer, open a popup at the
-                    // location of the feature, with description HTML from its properties.
-                    map.on('click', 'placesLayer', (e) => {
-                        // Copy coordinates array.
-                        const coordinates = e.features[0].geometry.coordinates.slice();
-                        const description = e.features[0].properties.description;
-
-                        // Ensure that if the map is zoomed out such that multiple
-                        // copies of the feature are visible, the popup appears
-                        // over the copy being pointed to.
-                        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-                        }
-
-                        new mapboxgl.Popup()
-                            .setLngLat(coordinates)
-                            .setHTML(description)
-                            .addTo(map);
-                    });
-
-                    // Change the cursor to a pointer when the mouse is over the places layer.
-                    map.on('mouseenter', 'placesLayer', () => {
-                        map.getCanvas().style.cursor = 'pointer';
-                    });
-
-                    // Change it back to a pointer when it leaves.
-                    map.on('mouseleave', 'placesLayer', () => {
-                        map.getCanvas().style.cursor = '';
-                    });
-
-                })
-                .catch(error => console.error('Error:', error));
-
-
-
-            // Add user posts to the map every time the base map style is loaded 
-            function addAdditionalSourceAndLayer() {
-                console.log(geojson_data);
-
-
-                map.addSource('placesSource', {
-                    'type': 'geojson',
-                    'data': geojson_data
-                })
-
-                map.addLayer({
-                    'id': 'placesLayer',
-                    'type': 'symbol',
-                    'source': 'placesSource',
-                    'layout': {
-                        'icon-image': ['get', 'icon'],
-                        'icon-size': 2.50,
-                        'icon-allow-overlap': true
-                    }
-                });
-
-            }
-
-
-            // Get the basemap choice from radio button
-            const layerList = document.getElementById('basemap-menu');
-            const inputs = layerList.getElementsByTagName('input');
-
-            //change basemap based on the radio button choice
-            for (const input of inputs) {
-                input.onclick = (layer) => {
-                    const layerId = layer.target.id;
-                    map.setStyle('mapbox://styles/mapbox/' + layerId);
-
-                    // Add source and layer whenever base style is loaded
-                    map.on('style.load', () => {
-                        addAdditionalSourceAndLayer();
-                    });
-                };
-            }
-
-
-
-        }
-        window.onload = function () {
-            getallLocation();
-        };
-
-
-
-
-
-
-
-
+        new mapboxgl.Marker().setLngLat(center).addTo(map);
 
         function toggleSidebar(id) {
             const elem = document.getElementById(id);
@@ -433,6 +152,83 @@
         });
 
 
+        map.on('load', () => {
+            map.addSource('places', {
+                // This GeoJSON contains features that include an "icon"
+                // property. The value of the "icon" property corresponds
+                // to an image in the Mapbox Streets style's sprite.
+                'type': 'geojson',
+                'data': {
+                    'type': 'FeatureCollection',
+                    'features': [
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'description':
+                                    '<strong>Username1</strong><p>User introduction or other information 2.</p>',
+                                'icon': 'theatre'
+                            },
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [-77.038659, 38.931567]
+                            }
+                        },
+                        {
+                            'type': 'Feature',
+                            'properties': {
+                                'description':
+                                    '<strong>Username2</strong><p>User introduction or other information 1.</p>',
+                                'icon': 'theatre'
+                            },
+                            'geometry': {
+                                'type': 'Point',
+                                'coordinates': [-77.003168, 38.894651]
+                            }
+                        }
+                    ]
+                }
+            });
+            // Add a layer showing the places.
+            map.addLayer({
+                'id': 'places',
+                'type': 'symbol',
+                'source': 'places',
+                'layout': {
+                    'icon-image': ['get', 'icon'],
+                    'icon-allow-overlap': true
+                }
+            });
+
+            // When a click event occurs on a feature in the places layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            map.on('click', 'places', (e) => {
+                // Copy coordinates array.
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const description = e.features[0].properties.description;
+
+                // Ensure that if the map is zoomed out such that multiple
+                // copies of the feature are visible, the popup appears
+                // over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(description)
+                    .addTo(map);
+            });
+
+            // Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'places', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'places', () => {
+                map.getCanvas().style.cursor = '';
+            });
+        });
 
     </script>
 
