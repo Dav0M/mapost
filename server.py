@@ -148,7 +148,7 @@ def edit_user_post():
     fd = request.form
     img = request.files['image-input']
     update_post(fd, img)
-    return redirect("/")
+    return redirect(f"/user/{session['user_id']['id']}")
 
 
 # @app.get("/search", methods=["POST"])
