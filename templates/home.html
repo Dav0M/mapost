@@ -4,7 +4,7 @@
   <title>Website Home</title>
   <link rel="stylesheet" href="/static/css/feed.css">
   <script src="/static/js/home.js"></script>
-  <script src="/static/js/search.js" async></script>
+  <script src="static/js/search.js" async></script>
 {% endblock %}
 {% block content %}
   <div id="layout" class="pure-g">
@@ -22,7 +22,7 @@
           <a href="" class="pure-menu-heading">Sort By:</a>
         </li>
         <li class="pure-menu-item">
-          <a href="/?recent=true" class="pure-menu-link {% if not (session.location) %}active-sort{% endif %}">Recent</a>
+          <a href="/" class="pure-menu-link">Recent</a>
         </li>
         <li class="pure-menu-item">
           <form action="/", method="post" id="sort-form">
@@ -31,66 +31,46 @@
   
             <label for="create-long"></label>
             <input type="hidden" id="create-long" name="create-long" value="0">
-            <button type="button" id="curr-location" class="sort-nearby pure-menu-link {% if session.location %}active-sort{% endif %}">Nearby</button>
+            <button type="button" id="curr-location" class="sort-nearby pure-menu-link">Nearby</button>
           </form>
         </li>
       </ul>
     </div>
 
     <div class="posts-grid pure-u-3-4">  
-      <div class="post-col-left pure-u-2-5">
-          {% for i in range(posts| length) %}
-              {% if i%2 == 0 %}
-                  <div class="post" id="{{ posts[i].id }}">
-                    <div class="post-author-img"><img class="author-img" src="{{ posts[i]['user_img'] }}"></div>
-                    <div class="post-author"><a href="/user/{{ posts[i]['user_id'] }}">{{ posts[i]['name'] }}</a></div>
-                    <div class="post-date">{{ posts[i]['time'] }}</div>
-                    <div class="post-content">{{ posts[i]['content'] }}</div>
-                    {% if posts[i].get('img') != '' %}
-                      <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
-                    {% endif %}
-                    <div class="post-location">{{ posts[i]['geog'] }}</div>
-                  </div>
-              {% endif %}
-          {% endfor %}
-      </div>
+        <div class="post-col-left pure-u-2-5">
+            {% for i in range(posts| length) %}
+                {% if i%2 == 0 %}
+                    <div class="post" id="{{ posts[i].id }}">
+                        <div class="post-author">{{ posts[i]['name'] }}</div>
+                        <div class="post-date">{{ posts[i]['time'] }}</div>
+                        <div class="post-content">{{ posts[i]['content'] }}</div>
+                        {% if posts[i].get('img') != '' %}
+                          <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
+                        {% endif %}
+                        <div class="post-location">{{ posts[i]['geog'] }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-      <div class="post-col-right pure-u-2-5">
-        {% for i in range(posts| length) %}
-          {% if i%2 != 0 %}
-            <div class="post" id="{{ posts[i]['id'] }}">
-              <div class="post-author-img"><img class="author-img" src="{{ posts[i]['user_img'] }}"></div>
-              <div class="post-author"><a href="/user/{{ posts[i]['user_id'] }}">{{ posts[i]['name'] }}</a></div>
-              <div class="post-date">{{ posts[i]['time'] }}</div>
-              <div class="post-content">{{ posts[i]['content'] }}</div>
-              {% if posts[i].get('img') != '' %}
-                <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
-              {% endif %}
-              <div class="post-location">{{ posts[i]['geog'] }}</div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
+        <div class="post-col-right pure-u-2-5">
+            {% for i in range(posts| length) %}
+                {% if i%2 != 0 %}
+                    <div class="post" id="{{ posts[i]['id'] }}">
+                        <div class="post-author">{{ posts[i]['name'] }}</div>
+                        <div class="post-date">{{ posts[i]['time'] }}</div>
+                        <div class="post-content">{{ posts[i]['content'] }}</div>
+                        {% if posts[i].get('img') != '' %}
+                          <div class="post-image"><img class="images" src="data:image;base64,{{ posts[i]['img'] }}"></div>
+                        {% endif %}
+                        <div class="post-location">{{ posts[i]['geog'] }}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
 
-    <div class="pure-menu pure-menu-horizontal pages">
-      <ul class="pure-menu-list">
-        {% if page > 1%}
-          <li class="pure-menu-item page-back">
-            <a href="/?page={{ page-1 }}" class="pure-menu-link">Back</a>
-          </li>
-        {% endif %}
-          <li class="pure-menu-item page-curr">
-            <a href="" class="pure-menu-heading">{{ page }}</a>
-          </li>
-        {% if page < total %}
-          <li class="pure-menu-item page-next">
-            <a href="/?page={{ page+1 }}" class="pure-menu-link">Next</a>
-          </li>
-        {% endif %}
-      </ul>
     </div>
   </div>
-
 {% endblock %}
 
