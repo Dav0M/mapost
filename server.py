@@ -1,15 +1,44 @@
+
 from flask import Flask, render_template, jsonify, request, session,redirect, url_for, abort, make_response
 import json, os, base64, math
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from authlib.integrations.flask_client import OAuth
 from functools import wraps
+# from dotenv import load_dotenv
+from flask_sqlalchemy import SQLAlchemy
 
 from data import *
 
 
 app = Flask(__name__)
 app.secret_key = env['FLASK_SECRET']
+
+# load_dotenv()
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+
+print(os.environ.get("DATABASE_URL"))
+db = SQLAlchemy(app)
+
+class UserPost(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    name = db.Column(db.Text, nullable=False)
+    email = db.Column(db.Text)
+    user_img = db.Column(db.Text)
+    content = db.Column(db.String(256), nullable=False)
+    img = db.Column(db.LargeBinary)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+    # geog = db.Column('(ST_X(ST_AsText(posts2.geog)), ST_Y(ST_AsText(posts2.geog)))', nullable=False)
+    time = db.Column(db.DateTime(timezone=True), nullable=False)
+
+    def custom_sql_query():
+        query = db.session.execute(db.text("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img", ST_X(ST_AsText(posts2.geog)) as "longitude", ST_Y(ST_AsText(posts2.geog)) as "latitude", posts2.time, users.name, users.email, users.img as "user_img" from posts2 inner join users on posts2.user_id=users.id """)).fetchall()
+
+        return query
 
 oauth = OAuth(app)
 
@@ -83,10 +112,6 @@ def load_home():
     posts = get_posts(session.get('location', None), page)
     return render_template("home.html", posts=posts, page=page, total=total)
 
-@app.get("/map")
-def load_map():
-    return render_template("map_main.html")
-
 @app.get("/user_home")
 @require_auth
 def user_home():
@@ -159,3 +184,39 @@ def search_posts():
     search_term = request.args.get('q', '')
     posts = search_posts_in_database(search_term)
     return jsonify(posts) 
+
+
+
+@app.route('/mapping', methods=['GET'])
+def mapping():
+    return render_template('map_main.html')
+
+@app.route('/showlocations', methods=['GET'])
+def get_info():
+
+    posts = UserPost.custom_sql_query()
+    
+    post_package = []
+    for post in posts:
+        post_i = {
+            'post_id': post.id,
+            'user_id': post.user_id,
+            'user_name': post.name,
+            'user_email': post.email,
+            'user_img': post.user_img,
+            'content': post.content,
+            'longitude': post.longitude,
+            'latitude': post.latitude,
+            # 'geog': post.geog,
+            'time': post.time,
+            'img': post.img
+        }
+        post_package.append(post_i)
+
+    print("post_package")
+
+    return jsonify(post_package)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
