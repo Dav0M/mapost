@@ -14,7 +14,7 @@
           <legend>Edit Your Post:</legend>
           <div class="pure-control-group">
             <label for="create-text"></label>
-            <textarea id="create-text" name="create-text" class="pure-input-1" placeholder="What is happening?!" required>{{ post.content }}</textarea>
+            <textarea id="create-text" name="create-text" class="pure-input-1" placeholder="What is happening?!" maxlength="256" required>{{ post.content }}</textarea>
           </div>
           <div class="pure-group">
             <legend>Choose an image:</legend>
@@ -31,7 +31,7 @@
             <button type="button" id="curr-location" class="pure-button pure-input">Use Current Location</button>
           </div>
           <div class="pure-controls form-submit-field">
-            <button type="submit" class="pure-button pure-button-primary pure-u">Post</button>
+            <button type="submit" class="pure-button pure-button-primary pure-u">Save Edit</button>
           </div>
         </fieldset>
       </form>

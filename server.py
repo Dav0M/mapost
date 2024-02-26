@@ -74,7 +74,7 @@ def load_home():
     page = request.args.get('page', 1, type=int)
     total = math.ceil( (get_total()['count'])/10 )
     if page < 1 or page > total:
-        abort(404)
+        abort(404) #invalid page number
     if request.method == 'POST':
         session['location'] = request.form
     else:
@@ -98,9 +98,14 @@ def user_home():
 
 @app.get("/user/<int:user_id>")
 def show_user_profile(user_id):
-    posts = get_users_posts(user_id)
+    page = request.args.get('page', 1, type=int)
+    total = math.ceil( (get_total(user_id)['count'])/10 )
+    if total == 0: total = 1
+    if page < 1 or page > total:
+        abort(404) #invalid page number
+    posts = get_users_posts(user_id, page)
     user = get_users_info(user_id)
-    return render_template("user_home.html", posts=posts, user=user)
+    return render_template("user_home.html", posts=posts, user=user, page=page, total=total)
     
 
 @app.route("/create", methods=['GET', 'POST'])
