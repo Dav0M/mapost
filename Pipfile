@@ -10,6 +10,7 @@ psycopg2-binary = "*"
 authlib = "*"
 requests = "*"
 sqlalchemy-bigquery = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
