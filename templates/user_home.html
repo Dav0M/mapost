@@ -27,7 +27,6 @@
             <div class="post-row pure-u-1" id="{{ post['id'] }}">
               <div class="pure-g">
                 <div class="post pure-u-3-5">
-                  
                   <div class="post-author-img"><img class="author-img" src="{{ post['user_img'] }}"></div>
                   <div class="post-author"><a href="/user/{{ post['user_id'] }}">{{ post['name'] }}</a></div>
                   {% if session.get('user_id') and session['user_id']['id'] == user.id %}
