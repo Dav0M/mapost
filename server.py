@@ -87,15 +87,6 @@ def load_home():
 def load_map():
     return render_template("map_main.html")
 
-@app.get("/user_home")
-@require_auth
-def user_home():
-    page = request.args.get('page', 1, type=int)
-    posts = get_posts(session.get('location', None), page)
-    email = session["user"]["userinfo"]["email"]
-    id = get_userid(email)["id"]
-    return render_template("user_home.html", posts=posts, id=id)
-
 @app.get("/user/<int:user_id>")
 def show_user_profile(user_id):
     page = request.args.get('page', 1, type=int)

@@ -29,17 +29,19 @@
 
     <div class="pure-u-1-3 header-right">
       {% if session.user %}
-      <div class="pure-menu pure-menu-horizontal pure-menu-has-children pure-menu-allow-hover">
-        <a href="/user_home" class="login-button pure-menu-link pure-button">{{ session.user.userinfo.nickname }}</a>
-        <ul class="pure-menu-children">
-          <li class="pure-menu-item">
-            <a href="/create" class="pure-menu-link">Create</a>
-          </li>
-          <li class="pure-menu-item">
-            <a href="/logout" class="pure-menu-link">Log Out</a>
-          </li>
-        </ul>
-      </div>
+      <ul class="pure-menu-list">
+        <div class="pure-menu pure-menu-horizontal pure-menu-has-children pure-menu-allow-hover">
+          <a href="/user/{{ session.user_id.id }}" class="login-button pure-menu-link pure-button">{{ session.user.userinfo.nickname }}</a>
+          <ul class="pure-menu-children">
+            <li class="pure-menu-item">
+              <a href="/create" class="pure-menu-link">Create</a>
+            </li>
+            <li class="pure-menu-item">
+              <a href="/logout" class="pure-menu-link">Log Out</a>
+            </li>
+          </ul>
+      </ul>
+    </div>
       {% else %}
       <a href="/login" class="login-button pure-menu-link pure-button">Login</a>
       {% endif %}
