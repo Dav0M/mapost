@@ -1,27 +1,30 @@
 const searchInput = document.querySelector('.search-input');
-const searchDropdown = document.querySelector('.search-dropdown');
-const value_search = "";
+  const searchDropdown = document.querySelector('.search-dropdown');
 
-
-function fetchSearchResults(searchTerm) {
-  // Fetch search results from your Flask API
-  fetch(`/search?q=${searchTerm}`)
-    .then(response => response.json())
-    .then(posts => {
-      const results = posts.map(post => post.content);
-      updateDropdown(results);
-    }) 
-    .catch(error => console.error('Error fetching search results:', error));
-}
-
+  // Dummy data for demonstration
+  const dummyData = [
+    "Apple",
+    "Banana",
+    "Orange",
+    "Pineapple",
+    "Grapes",
+    "Watermelon",
+    "Mango",
+    "Peach"
+  ];
+function filterData(value) {
+    return dummyData.filter(item =>
+      item.toLowerCase().includes(value.toLowerCase())
+    );
+  }
 
   // Function to update dropdown with filtered results
   function updateDropdown(results) {
     const dropdownContent = results.map(result =>
-      `<div class="search-dropdown-item">${truncateText(result)}</div>`
+      `<div class="search-dropdown-item">${result}</div>`
     ).join('');
     searchDropdown.innerHTML = dropdownContent;
-    searchDropdown.style.display = results.length ? '' : 'none';
+    searchDropdown.style.display = results.length ? 'block' : 'none';
   }
 
   // Event listener for input keyup
@@ -31,7 +34,8 @@ function fetchSearchResults(searchTerm) {
       searchDropdown.style.display = 'none';
       return;
     }
-    fetchSearchResults(value);
+    const filteredData = filterData(value);
+    updateDropdown(filteredData);
   });
 
   // Event listener to handle clicks on dropdown items
@@ -48,12 +52,3 @@ function fetchSearchResults(searchTerm) {
       searchDropdown.style.display = 'none';
     }
   });
-
-
-
-function truncateText(text, maxLength = 30) {
-  if (text.length > maxLength) {
-    return text.substring(0, maxLength - 3) + '...';
-  }
-  return text;
-}

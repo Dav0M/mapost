@@ -12,7 +12,7 @@
 
 .container {
     margin-left: auto;
-    margin-right: auto;
+    margin-right: 130px;
     display: inline-block;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -20,7 +20,7 @@
 
 .search-container {
     position: relative;
-    width: 100%;
+    width: 150%;
     margin: auto;
 }
 
@@ -40,7 +40,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    margin-left: 10px;
+    margin-left: 5px;
     width: 100%;
     z-index: 1000;
     background-color: #fff;
