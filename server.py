@@ -112,10 +112,6 @@ def load_home():
     posts = get_posts(session.get('location', None), page)
     return render_template("home.html", posts=posts, page=page, total=total)
 
-@app.get("/map")
-def load_map():
-    return render_template("map_main.html")
-
 @app.get("/user_home")
 @require_auth
 def user_home():
@@ -191,7 +187,7 @@ def search_posts():
 
 
 
-@app.route('/mapping')
+@app.route('/mapping', methods=['GET'])
 def mapping():
     return render_template('map_main.html')
 
