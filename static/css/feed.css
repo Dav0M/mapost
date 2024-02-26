@@ -1,24 +1,19 @@
-.pages {
-    text-align: center;
-}
-
 .feed-tools {
     text-align: center;
+    margin-bottom: 10px;
 }
+
 .sort-nearby {
     background: none;
     border: none;
     cursor: pointer;
-}
-
-.active-sort {
-    background-color: lightgray;
+    color: #0078d7;
 }
 
 .container {
     margin-left: auto;
     margin-right: auto;
-    display: inline-block; 
+    display: inline-block;
     margin-top: 1em;
     margin-bottom: 1em;
 }
@@ -32,7 +27,7 @@
 .search-input {
     padding: 10px;
     width: calc(100% - 10px);
-    border: none;
+    border: 1px #ccc;
     border-radius: 25px;
     outline: none;
     font-size: 16px;
@@ -45,16 +40,16 @@
     position: absolute;
     top: 100%;
     left: 0;
-    margin-left:10px;
+    margin-left: 10px;
     width: 100%;
     z-index: 1000;
     background-color: #fff;
     border: 1px solid #ccc;
     border-top: none;
     border-radius: 0 0 4px 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: inline-block;
- }
+}
 
 .search-dropdown-item {
     padding: 15px 10px;
@@ -66,8 +61,11 @@
 }
 
 .posts-grid {
+    display: flex;
     background-color: rgb(238, 234, 234);
     margin-left: 12.5%;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .post-col-left {
@@ -90,6 +88,15 @@
     margin-bottom: 10%;
     display: flex;
     flex-wrap: wrap;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .post-author {
@@ -115,14 +122,13 @@
 
 .post-image {
     object-fit: contain;
-    max-width: 100%;
+    width: 50%;
     height: auto;
 }
 
 .images {
-    padding-left: 1em;
-    max-width: 70%;
-    height: auto;
+    max-width: 100%;
+    padding-left: 2em;
 }
 
 .post-location {
@@ -130,6 +136,19 @@
     width: 100%;
     padding-top: 1em;
     margin-bottom: 1.5em;
-    word-break: break-all;
 }
 
+@media (max-width: 768px) {
+    .posts-grid {
+        flex-direction: column;
+    }
+
+    .post-col-left,
+    .post-col-right {
+        flex-basis: 100%;
+    }
+
+    .search-input {
+        width: calc(100% - 40px);
+    }
+}
