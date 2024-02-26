@@ -1,27 +1,24 @@
 const searchInput = document.querySelector('.search-input');
 const searchDropdown = document.querySelector('.search-dropdown');
 
-  // Dummy data for demonstration
-  const dummyData = [
-    "Apple",
-    "Banana",
-    "Orange",
-    "Pineapple",
-    "Grapes",
-    "Watermelon",
-    "Mango",
-    "Peach"
-  ];
-function filterData(value) {
-    return dummyData.filter(item =>
-      item.toLowerCase().includes(value.toLowerCase())
-    );
-  }
+
+
+function fetchSearchResults(searchTerm) {
+  // Fetch search results from your Flask API
+  fetch(`/search?q=${searchTerm}`)
+    .then(response => response.json())
+    .then(posts => {
+      const results = posts.map(post => post.content);
+      updateDropdown(results);
+    })
+    .catch(error => console.error('Error fetching search results:', error));
+}
+
 
   // Function to update dropdown with filtered results
   function updateDropdown(results) {
     const dropdownContent = results.map(result =>
-      `<div class="search-dropdown-item">${result}</div>`
+      `<div class="search-dropdown-item">${truncateText(result)}</div>`
     ).join('');
     searchDropdown.innerHTML = dropdownContent;
     searchDropdown.style.display = results.length ? '' : 'none';
@@ -34,8 +31,7 @@ function filterData(value) {
       searchDropdown.style.display = 'none';
       return;
     }
-    const filteredData = filterData(value);
-    updateDropdown(filteredData);
+    fetchSearchResults(value);
   });
 
   // Event listener to handle clicks on dropdown items
@@ -52,3 +48,12 @@ function filterData(value) {
       searchDropdown.style.display = 'none';
     }
   });
+
+
+
+function truncateText(text, maxLength = 30) {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength - 3) + '...';
+  }
+  return text;
+}

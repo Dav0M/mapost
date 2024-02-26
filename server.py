@@ -151,6 +151,8 @@ def edit_user_post():
     return redirect("/")
 
 
-# @app.get("/search", methods=["POST"])
-# def search_result():
-#     return 
+@app.route("/search", methods=['GET'])
+def search_posts():
+    search_term = request.args.get('q', '')
+    posts = search_posts_in_database(search_term)
+    return jsonify(posts) 

@@ -119,3 +119,14 @@ def delete_post(post_id, user_id):
         current_app.logger.info("Deleting single post data")
         cur.execute("delete from posts2 where id=%s and user_id=%s", (post_id,user_id))
         return cur.rowcount
+    
+
+def search_posts_in_database(search_term):
+    with get_cursor(True) as cur:
+        cur.execute("""SELECT posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
+                        (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img 
+                        FROM posts2 
+                        INNER JOIN users ON posts2.user_id=users.id 
+                        WHERE posts2.content ILIKE %s
+                        ORDER BY posts2.time DESC""", ('%' + search_term + '%',))
+        return cur.fetchall()
