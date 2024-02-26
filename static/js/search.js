@@ -1,6 +1,6 @@
 const searchInput = document.querySelector('.search-input');
 const searchDropdown = document.querySelector('.search-dropdown');
-
+const value_search = "";
 
 
 function fetchSearchResults(searchTerm) {
@@ -10,7 +10,7 @@ function fetchSearchResults(searchTerm) {
     .then(posts => {
       const results = posts.map(post => post.content);
       updateDropdown(results);
-    })
+    }) 
     .catch(error => console.error('Error fetching search results:', error));
 }
 
