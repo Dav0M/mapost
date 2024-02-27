@@ -100,16 +100,21 @@ def require_auth(f):
 
 @app.route("/", methods=['GET', 'POST'])
 def load_home():
+    search_term = request.args.get('q', '')
     page = request.args.get('page', 1, type=int)
     total = math.ceil( (get_total()['count'])/10 )
     if page < 1 or page > total:
         abort(404) #invalid page number
     if request.method == 'POST':
         session['location'] = request.form
+  
+    if search_term:
+        posts = search_posts_in_database(search_term)
+        print(posts)
     else:
         if request.args.get('recent') == 'true':
             session.pop('location', None)
-    posts = get_posts(session.get('location', None), page)
+        posts = get_posts(session.get('location', None), page)
     return render_template("home.html", posts=posts, page=page, total=total)
 
 @app.get("/map")

@@ -12,7 +12,6 @@
 
 .container {
     margin-left: auto;
-    margin-right: 130px;
     display: inline-block;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -20,7 +19,7 @@
 
 .search-container {
     position: relative;
-    width: 150%;
+    width: 100%;
     margin: auto;
 }
 
@@ -54,6 +53,9 @@
 .search-dropdown-item {
     padding: 15px 10px;
     cursor: pointer;
+    display: block;
+    border-bottom: 1px solid #ccc;
+    text-decoration: none;
 }
 
 .search-dropdown-item:hover {
@@ -66,6 +68,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color: #000;
   }
 
 .posts-grid {
