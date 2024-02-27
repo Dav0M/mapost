@@ -13,7 +13,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Offset the vanishing point using padding</title>
+    <title>Mapping Your Community</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
@@ -257,11 +257,36 @@
             background: #00853e;
             border-radius: 0;
         }
+
+        ul.sidebar-return {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .home-button {
+            font-family: 'Arial', sans-serif;
+            font-size: 15px;
+            text-align: center;
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #00853e;
+            transition: background-color 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #024622;
+        }
     </style>
 
     <div id="map">
         <div id="left" class="sidebar flex-center left collapsed">
             <div class="sidebar-content rounded-rect" id="content">
+                <ul class="sidebar-return">
+                    <li><a href="/" class="home-button">Home</a></li>
+                </ul>
                 <div id='listings' class='listings'></div>
                 <div class="sidebar-toggle rounded-rect left" onclick="toggleSidebar('left')">
                     &rarr;
