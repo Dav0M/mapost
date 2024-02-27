@@ -1,3 +1,6 @@
+body {
+    background-color: #f6f6f6;
+}
 .user-info {
     justify-content: center;
 }
@@ -8,6 +11,7 @@
     display: flex;
     flex-wrap: wrap;
     border: solid black;
+    margin-bottom: 50px;
 }
 
 .post-author {
@@ -24,7 +28,7 @@
 }
 
 .post-content {
-    height: 200%;
+    height: 100%;
     word-break: break-all;
     flex-basis: 100%;
     margin: 2em;
@@ -33,7 +37,7 @@
 
 .post-image {
     object-fit: contain;
-    max-width: 100%;
+    max-width: 80%;
     height: auto;
 }
 
@@ -49,4 +53,39 @@
     padding-top: 1em;
     margin-bottom: 1.5em;
     word-break: break-all;
+}
+
+.user-container {
+    background-color: white;
+    border: 2px solid #ccc; 
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+.user-details {
+    margin-left: 15px; 
+    margin-bottom: 15px; 
+    font-size: 10px;
+}
+
+.delete-button {
+    background-color: #f2f2f2;
+    color: #000000; 
+    font-size: 14px; 
+}
+
+.edit-button {
+    background-color: #f2f2f2;
+    color: #000000; 
+    font-size: 14px; 
+    margin-left: 55px;
+}
+
+.more-button{
+    background-color: #f2f2f2;
+    color: #000000; 
+    font-size: 14px; 
+    padding: 6px 10px;
+    margin-left: 145px;
+
 }
