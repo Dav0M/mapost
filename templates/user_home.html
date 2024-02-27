@@ -30,29 +30,18 @@
                   <div class="post-author-img"><img class="author-img" src="{{ post['user_img'] }}"></div>
                   <div class="post-author"><a href="/user/{{ post['user_id'] }}">{{ post['name'] }}</a></div>
                   {% if session.get('user_id') and session['user_id']['id'] == user.id %}
-                  <ul class="pure-menu-list">
-                    <div class="pure-menu pure-menu-horizontal pure-menu-has-children pure-menu-allow-hover">
-                      <button type="button" class="pure-button more-button">...</button>
-                      <ul class="pure-menu-children">
-                        <li class="pure-menu-item">
-                          <a class="pure-button edit-button" href="/edit/{{ user.id }}?post={{ post['id'] }}">Edit</a>
-                        </li>
-                        <li class="pure-menu-item">
-                          <button type="button" class="pure-button delete-button">Delete</button>
-                        </li>
-                      </ul>
-                  </ul>
-
-
-
-
-
-                    <!-- <div class="pure-u">
-                      <a class="pure-button edit-button" href="/edit/{{ user.id }}?post={{ post['id'] }}">Edit</a>
-                    </div>
-                    <div class="pure-u">
-                      <button type="button" class="pure-button delete-button">Delete</button>
-                    </div> -->
+                    <ul class="pure-menu-list">
+                      <div class="pure-menu pure-menu-horizontal pure-menu-has-children pure-menu-allow-hover">
+                        <button type="button" class="pure-button more-button">...</button>
+                        <ul class="pure-menu-children">
+                          <li class="pure-menu-item">
+                            <a class="pure-button edit-button" href="/edit/{{ user.id }}?post={{ post['id'] }}">Edit</a>
+                          </li>
+                          <li class="pure-menu-item">
+                            <button type="button" class="pure-button delete-button">Delete</button>
+                          </li>
+                        </ul>
+                    </ul>
                   {% endif %}
                   <div class="post-date">{{ post['time'] }}</div>
                   <div class="post-content">{{ post['content'] }}</div>

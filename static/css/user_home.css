@@ -58,14 +58,14 @@ body {
 .user-container {
     background-color: white;
     border: 2px solid #ccc; 
-    padding: 40px;
-    margin-bottom: 30px;
+    padding: 30px;
+    margin-bottom: 40px;
 }
 
 .user-details {
-    margin-left: 15px; 
-    margin-bottom: 15px; 
+    margin-left: 15px;
     font-size: 10px;
+
 }
 
 .delete-button {
@@ -88,4 +88,19 @@ body {
     padding: 6px 10px;
     margin-left: 145px;
 
+}
+
+.edit-profile-section {
+    margin-top: 10px;
+}
+
+.edit-textbox {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.edit-profile-button {
+    background-color: #4285f4; 
+    color: #ffffff; 
 }
