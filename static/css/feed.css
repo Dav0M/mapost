@@ -26,7 +26,8 @@ body,
 .sort-nearby button:hover,
 .pages .pure-menu-link:hover,
 .pages .pure-menu-link:focus,
-.pages .pure-menu-item a:hover {
+.pages .pure-menu-item a:hover,
+.page-curr .pure-menu-link {
     background-color: var(--hover-green);
     color: #ffffff;
 }
@@ -239,6 +240,11 @@ body,
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s ease;
+}
+
+.pages .pure-menu-link a:active {
+    background-color: var(--hover-green);
+    color: white;
 }
 
 .page-curr .pure-menu-link,
