@@ -1,3 +1,36 @@
+:root {
+    --main-green: #00853e;
+    --hover-green: #024622;
+    --text-gray: #333333;
+}
+
+body,
+.post-author,
+.post-content,
+.post-location {
+    color: var(--text-gray);
+}
+
+.pages .pure-menu-link,
+.sort-recent .active-sort,
+.sort-nearby.active-sort,
+.page-back .pure-menu-link,
+.page-next .pure-menu-link,
+.sort-recent .pure-menu-link,
+.sort-nearby button {
+    background-color: var(--main-green);
+    color: white;
+}
+
+.sort-recent .pure-menu-link:hover,
+.sort-nearby button:hover,
+.pages .pure-menu-link:hover,
+.pages .pure-menu-link:focus,
+.pages .pure-menu-item a:hover {
+    background-color: var(--hover-green);
+    color: #ffffff;
+}
+
 .feed-tools {
     text-align: center;
     margin-bottom: 10px;
@@ -7,7 +40,6 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #0078d7;
 }
 
 .container {
@@ -73,7 +105,7 @@
 
 .posts-grid {
     display: flex;
-    background-color: rgb(238, 234, 234);
+    background-color: #f7f7f7;
     margin-left: 12.5%;
     justify-content: center;
     flex-wrap: wrap;
@@ -107,8 +139,8 @@
 }
 
 .post:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .post-header {
@@ -192,5 +224,24 @@
 }
 
 .sort {
-    margin-left: 50px; 
+    margin-left: 50px;
+}
+
+.pages {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sort-recent .pure-menu-link,
+.sort-nearby button,
+.pages .pure-menu-link {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.page-curr .pure-menu-link,
+.page-curr .pure-menu-heading {
+    font-weight: bold;
 }
