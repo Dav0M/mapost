@@ -1,14 +1,13 @@
-window.addEventListener("load", ()=>{
+window.addEventListener("load", () => {
     delbuttons = document.querySelectorAll(".delete-button");
-    for(let i = 0; i<delbuttons.length; i++) {
-        delbuttons[i].addEventListener("click", ()=> deletePost(delbuttons[i]));
+    for (let i = 0; i < delbuttons.length; i++) {
+        delbuttons[i].addEventListener("click", () => deletePost(delbuttons[i].dataset.postId));
     }
 });
 
-async function deletePost(node) {
-    const postRow = node.parentNode.parentNode.parentNode;
+async function deletePost(postId) {
 
-    let data = {"id": postRow.id};
+    let data = {"id": postId};
 
     const response = await fetch("/api/post/delete", {
         method: "DELETE",
@@ -17,6 +16,6 @@ async function deletePost(node) {
     });
 
     if (response.ok || response.status == 404) {
-        postRow.remove();
+        location.reload();
     }
 }

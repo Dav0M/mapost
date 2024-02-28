@@ -1,6 +1,6 @@
 const searchInput = document.querySelector('.search-input');
 const searchDropdown = document.querySelector('.search-dropdown');
-
+const value_search = "";
 
 
 function fetchSearchResults(searchTerm) {
@@ -10,7 +10,7 @@ function fetchSearchResults(searchTerm) {
     .then(posts => {
       const results = posts.map(post => post.content);
       updateDropdown(results);
-    })
+    }) 
     .catch(error => console.error('Error fetching search results:', error));
 }
 
@@ -18,7 +18,7 @@ function fetchSearchResults(searchTerm) {
   // Function to update dropdown with filtered results
   function updateDropdown(results) {
     const dropdownContent = results.map(result =>
-      `<div class="search-dropdown-item">${truncateText(result)}</div>`
+      `<a href="/?q=${encodeURIComponent(result)}" class="search-dropdown-item"><span>${result}</span></a>`
     ).join('');
     searchDropdown.innerHTML = dropdownContent;
     searchDropdown.style.display = results.length ? '' : 'none';
