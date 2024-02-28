@@ -30,6 +30,7 @@
 .site-logo,
 .template-footer {
     color: white;
+    transition: color 0.3s ease;
 }
 
 .pure-menu-item {
@@ -53,6 +54,16 @@
     background: var(--main-green);
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.pure-menu-children {
+    background-color: var(--main-green);
+}
+
+.pure-menu-children .pure-menu-link {
+    background-color: var(--main-green);
+    padding: 5px 10px;
+    border-radius: 4px;
 }
 
 .pure-menu-link:hover,
