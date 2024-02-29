@@ -152,8 +152,9 @@ body {
 .pure-menu-children.more-children {
     max-width: 100px;
     position: relative;
-    /* bottom: 45px; */
+    bottom: -46px;
     margin-left: 47px;
+    margin-bottom: 47px;
 }
 
 .pure-menu-list {
