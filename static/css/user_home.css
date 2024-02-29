@@ -1,18 +1,19 @@
 body {
     background-color: #eeede7;
 }
+
 .user-info {
     justify-content: center;
 }
 
 
 .author-img {
-    width: 50px; 
+    width: 50px;
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
-    margin-left: 15px; 
-    margin-top: 15px; 
+    margin-left: 15px;
+    margin-top: 15px;
     margin-bottom: 10px;
 }
 
@@ -20,7 +21,7 @@ body {
     font-weight: bold;
     margin-left: 80px;
     position: absolute;
-    top: 30px; 
+    top: 30px;
 }
 
 .post-container {
@@ -103,12 +104,13 @@ body {
     padding: 10px;
     /* border-top: 1px solid #eee; */
     background-color: white;
-    position: relative; 
+    position: relative;
+    border-radius: 10px;
 }
 
 .user-container {
     background-color: white;
-    border: 2px solid #ccc; 
+    border: 2px solid #ccc;
     padding: 30px;
     margin-bottom: 40px;
     border-radius: 15px;
@@ -131,50 +133,51 @@ body {
 
 
 .delete-button {
-    color: #ffffff; 
-    font-size: 14px; 
+    color: #ffffff;
+    font-size: 14px;
 }
 
 .edit-button {
-    color: #ffffff; 
-    font-size: 14px; 
-    left:10px;
+    color: #ffffff;
+    font-size: 14px;
+    left: 10px;
 }
 
 .pure-menu-children.more-children {
-    max-width: 100px; 
+    max-width: 100px;
     position: absolute;
     bottom: 14px;
     margin-left: 321px;
-    
+
 }
 
 .pure-menu-list {
-    color: #ffffff; 
+    color: #ffffff;
 }
 
 .more-button {
     position: absolute;
-    bottom: 43px; 
-    right: 9px; 
+    bottom: 43px;
+    right: 9px;
     background-color: #00853e;
-    color: #ffffff; 
-    font-size: 14px; 
+    color: #ffffff;
+    font-size: 14px;
     padding: 6px 11px;
     border-radius: 5px;
 }
 
 .post-col-left {
     margin-left: 50px;
-    width:120%;
+    width: 120%;
 
 }
+
 .post-col-right {
     margin-left: 170px;
-    width:120%;
+    width: 120%;
 }
 
 
-.button-color{
-    color:black;
+.button-color {
+    color: black;
 }
