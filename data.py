@@ -43,10 +43,10 @@ def add_post(fd, img, id):
             (%s, %s, %s, ST_MakePoint(%s,%s))""", (id, fd["create-text"], imgBin, fd["create-long"], fd["create-lat"]))
         return cur.rowcount
     
-def get_posts(fd=None, page=1):
+def get_posts(loc=None, page=1):
     with get_cursor() as cur:
         current_app.logger.info("Getting feed post data")
-        if fd is None:
+        if loc is None:
             cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
                 (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", ST_Y(ST_AsText(posts2.geog)) as "lat", ST_X(ST_AsText(posts2.geog)) as "lon", posts2.time, users.name, users.img as user_img from posts2 
                 inner join users on posts2.user_id=users.id order by posts2.time desc limit 10 offset %s""", ((page-1)*10,))
@@ -54,7 +54,7 @@ def get_posts(fd=None, page=1):
             cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
                 (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", ST_Y(ST_AsText(posts2.geog)) as "lat", ST_X(ST_AsText(posts2.geog)) as "lon", posts2.time, users.name, users.img as user_img from posts2 
                 inner join users on posts2.user_id=users.id 
-                order by ST_Distance(posts2.geog, ST_MakePoint(%s,%s)) limit 10 offset %s""", (fd["create-long"], fd["create-lat"], (page-1)*10))
+                order by ST_Distance(posts2.geog, ST_MakePoint(%s,%s)) limit 10 offset %s""", (loc["create-long"], loc["create-lat"], (page-1)*10))
         return cur.fetchall()
 
 def get_single_post(post_id,user_id):
@@ -62,14 +62,6 @@ def get_single_post(post_id,user_id):
         current_app.logger.info("Getting single post data")
         cur.execute("select content, ST_Y(ST_AsText(geog)) as lat, ST_X(ST_AsText(geog)) as long from posts2 where id=%s and user_id=%s",(post_id,user_id))
         return cur.fetchone()
-
-"""
-def get_userid(email):
-    with get_cursor() as cur:
-        current_app.logger.info("Getting user ID data")
-        cur.execute("select id from users where email = %s", (email,))
-        return cur.fetchone()
-"""
 
 def add_user(name, email, img):
     with get_cursor(True) as cur:
@@ -83,14 +75,18 @@ def update_user(name, email, img):
         cur.execute("update users set name = %s, img = %s where email = %s returning id", (name, img, email))
         return cur.fetchone()
 
-def get_total(id=-1):
+def get_total(id=-1, search=''):
     with get_cursor() as cur:
         current_app.logger.info("Getting total posts")
-        if (id == -1):
-            cur.execute("select count(*) from posts2 inner join users on posts2.user_id=users.id")
-        else:
+        if (id != -1):
             cur.execute("select count(*) from posts2 inner join users on posts2.user_id=users.id where posts2.user_id=%s", (id,))
+            return cur.fetchone()
+        if (search != ''):
+            cur.execute("select count(*) from posts2 inner join users on posts2.user_id=users.id where posts2.content ILIKE %s", ('%'+search+'%',))
+            return cur.fetchone()
+        cur.execute("select count(*) from posts2 inner join users on posts2.user_id=users.id")
         return cur.fetchone()
+        
 
 def get_users_posts(user_id, page=1):
     with get_cursor() as cur:
@@ -120,12 +116,21 @@ def delete_post(post_id, user_id):
         cur.execute("delete from posts2 where id=%s and user_id=%s", (post_id,user_id))
         return cur.rowcount
     
-def search_posts_in_database(search_term):
+def search_posts_in_database(search_term, page=1, loc=None):
     with get_cursor() as cur:
-        cur.execute("""SELECT posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-                        (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img 
-                        FROM posts2 
-                        INNER JOIN users ON posts2.user_id=users.id 
-                        WHERE posts2.content ILIKE %s
-                        ORDER BY posts2.time DESC""", ('%' + search_term + '%',))
+        current_app.logger.info("Getting with search term")
+        if loc is None:
+            cur.execute("""SELECT posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
+                            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img 
+                            FROM posts2 
+                            INNER JOIN users ON posts2.user_id=users.id 
+                            WHERE posts2.content ILIKE %s
+                            ORDER BY posts2.time DESC LIMIT 10 OFFSET %s""", ('%' + search_term + '%', (page-1)*10))
+        else:
+            cur.execute("""SELECT posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
+                            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img 
+                            FROM posts2 
+                            INNER JOIN users ON posts2.user_id=users.id 
+                            WHERE posts2.content ILIKE %s
+                            ORDER BY ST_Distance(posts2.geog, ST_MakePoint(%s,%s)) LIMIT 10 OFFSET %s""", ('%' + search_term + '%', loc["create-long"], loc["create-lat"],(page-1)*10))
         return cur.fetchall()

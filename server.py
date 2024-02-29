@@ -106,30 +106,32 @@ def new_user():
 
 @app.route("/", methods=['GET', 'POST'])
 def load_home():
-    search_term = request.args.get('q', '')
-    page = request.args.get('page', 1, type=int)
-    total = math.ceil( (get_total()['count'])/10 )
-    if page < 1 or page > total:
-        return make_response("Not Found. Invalid Page",404) #invalid page number
     if request.method == 'POST':
-        if -90 <= request.form['create-lat'] <= 90 and -180 <= request.form['create-long'] <= 180:
+        if -90 <= float(request.form['create-lat']) <= 90 and -180 <= float(request.form['create-long']) <= 180:
             session['location'] = request.form
         else:
             return make_response("Invalid Coordinates for Sorting", 400)
-    if search_term:
-        posts = search_posts_in_database(search_term)
-        print(posts)
     else:
         if request.args.get('recent') == 'true':
             session.pop('location', None)
-        posts = get_posts(session.get('location', None), page)
-    return render_template("home.html", posts=posts, page=page, total=total)
+    
+    search_term = request.args.get('q', '')
+    page = request.args.get('page', 1, type=int)
+    total = math.ceil( (get_total(search=search_term)['count'])/10 )
+    if total == 0: total = 1
+    if page < 1 or page > total:
+        return make_response("Not Found. Invalid Page",404) #invalid page number
+    if search_term:
+        posts = search_posts_in_database(search_term=search_term, page=page, loc=session.get('location', None))
+    else:
+        posts = get_posts(loc=session.get('location', None), page=page)
+    return render_template("home.html", search=search_term, posts=posts, page=page, total=total)
 
 
 @app.get("/user/<int:user_id>")
 def show_user_profile(user_id):
     page = request.args.get('page', 1, type=int)
-    total = math.ceil( (get_total(user_id)['count'])/10 )
+    total = math.ceil( (get_total(id=user_id)['count'])/10 )
     if total == 0: total = 1
     if page < 1 or page > total:
         return make_response("Not Found. Invalid Page",404) #invalid page number
