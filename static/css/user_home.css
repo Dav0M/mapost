@@ -145,12 +145,15 @@ body {
     left: 10px;
 }
 
+.pure-menu-has-children {
+    margin-bottom: 10px;
+}
+
 .pure-menu-children.more-children {
     max-width: 100px;
-    position: absolute;
-    bottom: 14px;
-    margin-left: 313px;
-
+    position: relative;
+    /* bottom: 45px; */
+    margin-left: 47px;
 }
 
 .pure-menu-list {
@@ -158,14 +161,15 @@ body {
 }
 
 .more-button {
-    position: absolute;
-    background-color: #00853e;
-    bottom:45px;
+    /* position: relative; */
+    bottom: 75px;
     left: 420px;
+    background-color: #00853e;
     color: #ffffff;
     font-size: 14px;
     padding: 6px 11px;
     border-radius: 5px;
+    margin-left: 15px;
 }
 
 .post-col-left {
@@ -175,7 +179,7 @@ body {
 }
 
 .post-col-right {
-    margin-left: 130px;
+    margin-left: 170px;
     width: 120%;
 }
 
@@ -187,4 +191,8 @@ body {
 .pages {
     text-align: center;
     margin-top: 20px;
+}
+
+pure-menu-has-children {
+    margin-bottom: 15px;
 }
