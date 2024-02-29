@@ -6,8 +6,7 @@ function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setPosition);
     } else {
-        document.getElementById("create-lat").value="0";
-        document.getElementById("create-long").value="0";
+        alert("Location not supported on device")
     }
 }
 

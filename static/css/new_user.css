@@ -1,0 +1,25 @@
+body {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/63/BlankMap-World-2009.svg');
+}
+
+.info { 
+	animation-name: info;
+	animation-duration: 3s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+    margin-left: 33%;
+	margin-top: 3em;
+    background: #e8c660;
+    border-radius: 2em;
+}
+
+@keyframes info {
+	0% { transform: translate(0, 0px); }
+	50% { transform: translate(0, 15px); }
+	100% { transform: translate(0, -0px); } 
+}
+
+
+.info h1, .info h2 {
+    text-align: center;
+}

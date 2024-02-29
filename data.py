@@ -106,12 +106,12 @@ def get_users_info(user_id):
         cur.execute("select * from users where id=%s", (user_id,))
         return cur.fetchone()
 
-def update_post(fd, img):
+def update_post(fd, img, user_id):
     with get_cursor(True) as cur:
         current_app.logger.info("Updating single post data")
         imgData = img.read()
         imgBin = psycopg2.Binary(imgData)
-        cur.execute("update posts2 set content=%s, img=%s, geog=ST_MakePoint(%s,%s), time=current_timestamp where id=%s", (fd['create-text'], imgBin, fd["create-long"], fd["create-lat"], fd['post-id']))
+        cur.execute("update posts2 set content=%s, img=%s, geog=ST_MakePoint(%s,%s), time=current_timestamp where id=%s and user_id=%s", (fd['create-text'], imgBin, fd["create-long"], fd["create-lat"], fd['post-id'], user_id))
         return cur.rowcount
 
 def delete_post(post_id, user_id):
@@ -119,9 +119,6 @@ def delete_post(post_id, user_id):
         current_app.logger.info("Deleting single post data")
         cur.execute("delete from posts2 where id=%s and user_id=%s", (post_id,user_id))
         return cur.rowcount
-        cur.execute("update users set name = %s, img = %s where email = %s", (name, img, email))
-        return cur.rowcount
-    
     
 def search_posts_in_database(search_term):
     with get_cursor() as cur:

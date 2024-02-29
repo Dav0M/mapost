@@ -72,6 +72,8 @@ def callback():
     user_id = update_user(name, email, img)
     if (user_id is None):
         user_id = add_user(name, email, img)
+        session["user_id"] = user_id
+        return redirect("/gettingstarted")
     session["user_id"] = user_id
     return redirect("/")
 
@@ -98,16 +100,22 @@ def require_auth(f):
         return f(*args, **kwargs)
     return decorated
 
+@app.get("/gettingstarted")
+def new_user():
+    return render_template("new_user.html")
+
 @app.route("/", methods=['GET', 'POST'])
 def load_home():
     search_term = request.args.get('q', '')
     page = request.args.get('page', 1, type=int)
     total = math.ceil( (get_total()['count'])/10 )
     if page < 1 or page > total:
-        abort(404) #invalid page number
+        return make_response("Not Found. Invalid Page",404) #invalid page number
     if request.method == 'POST':
-        session['location'] = request.form
-  
+        if -90 <= request.form['create-lat'] <= 90 and -180 <= request.form['create-long'] <= 180:
+            session['location'] = request.form
+        else:
+            return make_response("Invalid Coordinates for Sorting", 400)
     if search_term:
         posts = search_posts_in_database(search_term)
         print(posts)
@@ -117,9 +125,6 @@ def load_home():
         posts = get_posts(session.get('location', None), page)
     return render_template("home.html", posts=posts, page=page, total=total)
 
-@app.get("/map")
-def load_map():
-    return render_template("map_main.html")
 
 @app.get("/user/<int:user_id>")
 def show_user_profile(user_id):
@@ -127,7 +132,7 @@ def show_user_profile(user_id):
     total = math.ceil( (get_total(user_id)['count'])/10 )
     if total == 0: total = 1
     if page < 1 or page > total:
-        abort(404) #invalid page number
+        return make_response("Not Found. Invalid Page",404) #invalid page number
     posts = get_users_posts(user_id, page)
     user = get_users_info(user_id)
     return render_template("user_home.html", posts=posts, user=user, page=page, total=total)
@@ -142,18 +147,19 @@ def create_post():
         fd = request.form
         img = request.files['image-input']
         user_id = session["user_id"]["id"]
-        add_post(fd, img, user_id)
+        if add_post(fd, img, user_id) == 0:
+            return make_response("Post Failed", 500)
         return redirect("/")
 
 @app.get("/edit/<int:user_id>")
 @require_auth
 def edit_post(user_id):
     if session['user_id']['id'] != user_id:
-        abort(404) #not authorized
+        return make_response("Forbidden. User can't access this page.",403)
     post_id = request.args.get('post', -1, type=int)
     post = get_single_post(post_id, user_id)
     if post is None:
-        abort(404) #post doesnt exist or not yours
+        return make_response("Your post doesn't exist.",400) #post doesnt exist or not yours
     return render_template("edit_post.html", post=post, post_id=post_id)
 
 @app.route("/api/post/delete", methods=['DELETE'])
@@ -172,13 +178,10 @@ def delete_user_post():
 def edit_user_post():
     fd = request.form
     img = request.files['image-input']
-    update_post(fd, img)
+    if update_post(fd, img, session[user_id][id]) == 0:
+        return make_response("Invalid request", 400)
     return redirect("/")
 
-
-# @app.get("/search", methods=["POST"])
-# def search_result():
-#     return 
 @app.route("/search", methods=['GET'])
 def search_posts():
     search_term = request.args.get('q', '')
