@@ -1,7 +1,3 @@
-window.addEventListener("load", () => {
-    document.getElementById("curr-location").addEventListener("click", getLocation);
-});
-
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setPosition);
