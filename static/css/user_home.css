@@ -147,8 +147,8 @@ body {
 
 .pure-menu-children.more-children {
     max-width: 100px;
-    position: relative;
-    bottom: 45px;
+    position: absolute;
+    bottom: 14px;
     margin-left: 313px;
 
 }
@@ -158,10 +158,10 @@ body {
 }
 
 .more-button {
-    position: relative;
-    bottom: 75px;
-    left: 420px;
+    position: absolute;
     background-color: #00853e;
+    bottom:45px;
+    left: 420px;
     color: #ffffff;
     font-size: 14px;
     padding: 6px 11px;
@@ -175,7 +175,7 @@ body {
 }
 
 .post-col-right {
-    margin-left: 170px;
+    margin-left: 130px;
     width: 120%;
 }
 
