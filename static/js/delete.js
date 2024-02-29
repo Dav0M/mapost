@@ -1,15 +1,12 @@
-window.addEventListener("load", ()=>{
+window.addEventListener("load", () => {
     delbuttons = document.querySelectorAll(".delete-button");
-    for(let i = 0; i<delbuttons.length; i++) {
-        delbuttons[i].addEventListener("click", ()=> deletePost(delbuttons[i]));
+    for (let i = 0; i < delbuttons.length; i++) {
+        delbuttons[i].addEventListener("click", () =>  deleteConfirmation(delbuttons[i].dataset.postId));
     }
 });
 
-async function deletePost(node) {
-    const postRow = node.parentNode.parentNode.parentNode;
-
-    let data = {"id": postRow.id};
-
+async function deletePost(postId) {
+    let data = {"id": postId};
     const response = await fetch("/api/post/delete", {
         method: "DELETE",
         headers: {"Content-Type": "application/json",},
@@ -17,6 +14,13 @@ async function deletePost(node) {
     });
 
     if (response.ok || response.status == 404) {
-        postRow.remove();
+        location.reload();
+    }
+}
+
+function deleteConfirmation(postId) {
+    const confirmed = window.confirm("Are you sure you want to delete this post?");
+    if (confirmed) {
+        deletePost(postId);
     }
 }

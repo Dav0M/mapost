@@ -1,0 +1,10 @@
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/offset-vanishing-point-with-padding/ -->
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/popup-on-click/ -->
+<!-- All types of MapBox icons: -->
+<!-- https://labs.mapbox.com/maki-icons/ -->
+<!-- MapBox icon size and image change -->
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/add-image/ -->
+<!-- MapBox change basemap style -->
+<!-- https://docs.mapbox.com/mapbox-gl-js/example/setstyle/ -->
+<!-- MapBox Locator Reference -->
+<!-- https://docs.mapbox.com/help/tutorials/building-a-store-locator/ -->

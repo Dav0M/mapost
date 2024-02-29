@@ -1,6 +1,6 @@
 const searchInput = document.querySelector('.search-input');
 const searchDropdown = document.querySelector('.search-dropdown');
-const value_search = "";
+searchDropdown.style.display = 'none';
 
 
 function fetchSearchResults(searchTerm) {
@@ -17,12 +17,26 @@ function fetchSearchResults(searchTerm) {
 
   // Function to update dropdown with filtered results
   function updateDropdown(results) {
-    const dropdownContent = results.map(result =>
-      `<a href="/?q=${encodeURIComponent(result)}" class="search-dropdown-item"><span>${result}</span></a>`
+    const limitedResults = results.slice(0, 9);
+    const dropdownContent = limitedResults.map(result =>
+      `<a href="/?q=${result}" class="search-dropdown-item"><span>${result}</span></a>`
     ).join('');
     searchDropdown.innerHTML = dropdownContent;
-    searchDropdown.style.display = results.length ? '' : 'none';
+    searchDropdown.style.display = limitedResults.length ? '' : 'none';
   }
+
+
+
+  function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}
+const debouncedFetchSearchResults = debounce(fetchSearchResults, 200);
 
   // Event listener for input keyup
   searchInput.addEventListener('keyup', function() {
@@ -31,7 +45,10 @@ function fetchSearchResults(searchTerm) {
       searchDropdown.style.display = 'none';
       return;
     }
-    fetchSearchResults(value);
+    else{
+      searchDropdown.style.display = 'inline-block';
+    }
+    debouncedFetchSearchResults(value);
   });
 
   // Event listener to handle clicks on dropdown items
