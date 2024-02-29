@@ -1,5 +1,5 @@
 body {
-    background-color: #f6f6f6;
+    background-color: #eeede7;
 }
 .user-info {
     justify-content: center;
@@ -10,9 +10,13 @@ body {
     height: fit-content;
     display: flex;
     flex-wrap: wrap;
-    border: solid black;
+    border: solid rgb(236, 236, 236);
+    border-radius: 10px;
     margin-bottom: 50px;
+    margin-left: 120px;
+     
 }
+
 
 .post-author {
     margin-top: 1.5em;
@@ -55,11 +59,16 @@ body {
     word-break: break-all;
 }
 
+
+
 .user-container {
     background-color: white;
     border: 2px solid #ccc; 
     padding: 30px;
     margin-bottom: 40px;
+    border-radius: 15px;
+    width: 80%;
+    transform: translate(8%, 10%);
 }
 
 .user-details {
@@ -68,39 +77,33 @@ body {
 
 }
 
+.user-name {
+    margin-left: 12px;
+    font-size: 20px;
+    margin-bottom: 30px;
+    line-height: 0;
+}
+
+
 .delete-button {
-    background-color: #f2f2f2;
-    color: #000000; 
+    color: #ffffff; 
     font-size: 14px; 
+    margin-right: 40px;
 }
 
 .edit-button {
-    background-color: #f2f2f2;
-    color: #000000; 
+    color: #ffffff; 
     font-size: 14px; 
-    margin-left: 55px;
+    margin-left: 50px;
 }
 
 .more-button{
-    background-color: #f2f2f2;
-    color: #000000; 
-    font-size: 14px; 
-    padding: 6px 10px;
-    margin-left: 145px;
-
-}
-
-.edit-profile-section {
-    margin-top: 10px;
-}
-
-.edit-textbox {
-    width: 100%;
-    height: 80px;
-    margin-bottom: 10px;
-}
-
-.edit-profile-button {
-    background-color: #4285f4; 
+    background-color: #388c5f;
     color: #ffffff; 
+    font-size: 14px; 
+    padding: 6px 11px;
+    margin-left: 140px;
+    margin-top: 10px;
+    border-radius: 5px;
 }
+

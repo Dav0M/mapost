@@ -1,7 +1,7 @@
 {% extends "header_template.html" %}
 {% block head %}
   {{ super() }}
-  <title>MAPOST | {{ user.name }}'s Profile </title>
+  <title> {{ user.name }}'s Profile </title>
   <link rel="stylesheet" href="/static/css/user_home.css">
   <script src="/static/js/delete.js"></script>
 {% endblock %}
@@ -13,7 +13,7 @@
         <div class="pure-u">
           <img width="64" height="64" class="user-img" src="{{ user.img }}">
         </div>
-        <div class="pure-u user-details">
+        <div class="pure-u user-name">
           <h1 class="user-name">{{ user.name }}</h1>
         </div>
       </div>
@@ -35,10 +35,10 @@
                         <button type="button" class="pure-button more-button">...</button>
                         <ul class="pure-menu-children">
                           <li class="pure-menu-item">
-                            <a class="pure-button edit-button" href="/edit/{{ user.id }}?post={{ post['id'] }}">Edit</a>
+                            <a class="pure-menu-link edit-button" href="/edit/{{ user.id }}?post={{ post['id'] }}">Edit</a>
                           </li>
                           <li class="pure-menu-item">
-                            <button type="button" class="pure-button delete-button" data-post-id="{{ post['id'] }}">Delete</button>
+                            <a class="pure-menu-link delete-button" data-post-id="{{ post['id'] }}">Delete</a>
                           </li>
                         </ul>
                     </ul>
