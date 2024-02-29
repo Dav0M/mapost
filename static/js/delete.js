@@ -1,15 +1,15 @@
 window.addEventListener("load", () => {
     delbuttons = document.querySelectorAll(".delete-button");
     for (let i = 0; i < delbuttons.length; i++) {
-        delbuttons[i].addEventListener("click", () =>  deleteConfirmation(delbuttons[i].dataset.postId));
+        delbuttons[i].addEventListener("click", () => deleteConfirmation(delbuttons[i].dataset.postId));
     }
 });
 
 async function deletePost(postId) {
-    let data = {"id": postId};
+    let data = { "id": postId };
     const response = await fetch("/api/post/delete", {
         method: "DELETE",
-        headers: {"Content-Type": "application/json",},
+        headers: { "Content-Type": "application/json", },
         body: JSON.stringify(data)
     });
 

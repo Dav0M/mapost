@@ -92,7 +92,7 @@ def get_users_posts(user_id, page=1):
     with get_cursor() as cur:
         current_app.logger.info("Getting users post data")
         cur.execute("""select posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img from posts2 
+            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", ST_Y(ST_AsText(posts2.geog)) as "lat", ST_X(ST_AsText(posts2.geog)) as "lon", posts2.time, users.name, users.img as user_img from posts2 
             inner join users on posts2.user_id=users.id where posts2.user_id=%s order by posts2.time desc limit 10 offset %s""", (user_id,(page-1)*10))
         return cur.fetchall()
 
@@ -121,14 +121,14 @@ def search_posts_in_database(search_term, page=1, loc=None):
         current_app.logger.info("Getting with search term")
         if loc is None:
             cur.execute("""SELECT posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-                            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img 
+                            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", ST_Y(ST_AsText(posts2.geog)) as "lat", ST_X(ST_AsText(posts2.geog)) as "lon", posts2.time, users.name, users.img as user_img 
                             FROM posts2 
                             INNER JOIN users ON posts2.user_id=users.id 
                             WHERE posts2.content ILIKE %s
                             ORDER BY posts2.time DESC LIMIT 10 OFFSET %s""", ('%' + search_term + '%', (page-1)*10))
         else:
             cur.execute("""SELECT posts2.id, posts2.user_id, posts2.content, encode(posts2.img::bytea, 'base64') as "img",
-                            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", posts2.time, users.name, users.img as user_img 
+                            (ST_Y(ST_AsText(posts2.geog)), ST_X(ST_AsText(posts2.geog))) as "geog", ST_Y(ST_AsText(posts2.geog)) as "lat", ST_X(ST_AsText(posts2.geog)) as "lon", posts2.time, users.name, users.img as user_img 
                             FROM posts2 
                             INNER JOIN users ON posts2.user_id=users.id 
                             WHERE posts2.content ILIKE %s
