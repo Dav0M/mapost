@@ -73,7 +73,7 @@ def callback():
     if (user_id is None):
         user_id = add_user(name, email, img)
         session["user_id"] = user_id
-        return redirect("/gettingstarted")
+        return redirect("/welcome")
     session["user_id"] = user_id
     return redirect("/")
 
@@ -100,7 +100,7 @@ def require_auth(f):
         return f(*args, **kwargs)
     return decorated
 
-@app.get("/gettingstarted")
+@app.get("/welcome")
 def new_user():
     return render_template("new_user.html")
 
