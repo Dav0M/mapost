@@ -180,7 +180,7 @@ def delete_user_post():
 def edit_user_post():
     fd = request.form
     img = request.files['image-input']
-    if update_post(fd, img, session[user_id][id]) == 0:
+    if update_post(fd, img, session['user_id']['id']) == 0:
         return make_response("Invalid request", 400)
     return redirect("/")
 
