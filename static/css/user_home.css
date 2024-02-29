@@ -26,7 +26,7 @@ body {
 .post-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin-left: 140px;
+    margin-left: 100px;
 }
 
 .post {
@@ -131,12 +131,12 @@ body {
 }
 
 .post-col-left {
-    margin-left: 120px;
+    margin-left: 50px;
     width:120%;
 
 }
 .post-col-right {
-    margin-right: 120px;
+    margin-left: 170px;
     width:120%;
 }
 
