@@ -63,6 +63,7 @@ body {
 
 .search-input {
     padding: 10px;
+    padding-left: 40px;
     width: calc(100% - 10px);
     border: 4px solid green;
     border-radius: 25px;
