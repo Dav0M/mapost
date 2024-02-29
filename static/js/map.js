@@ -312,15 +312,6 @@ function getPosition(position) {
     function addAdditionalSourceAndLayer() {
         console.log(geojson_data);
 
-        // map.loadImage('https://docs.mapbox.com/mapbox-gl-js/assets/cat.png', function (error, image) {
-        map.loadImage('https://delulu-project1.onrender.com/static/imgs/location_map_icon.png', function (error, image) {
-            if (error) throw error;
-
-            map.addImage('mapost-icon', image);
-
-            addAdditionalSourceAndLayer();
-        });
-
 
         map.addSource('placesSource', {
             'type': 'geojson',
@@ -332,10 +323,9 @@ function getPosition(position) {
             'type': 'symbol',
             'source': 'placesSource',
             'layout': {
-                'icon-image': 'mapost-icon',
-                'icon-size': 0.75,
-                'icon-allow-overlap': true,
-                'icon-rotate': 180
+                'icon-image': ['get', 'icon'],
+                'icon-size': 2.50,
+                'icon-allow-overlap': true
             }
         });
 
