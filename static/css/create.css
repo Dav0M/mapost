@@ -3,7 +3,8 @@ body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-.user-container, .pure-form {
+.user-container,
+.pure-form {
     background-color: white;
     border: 2px solid #ccc;
     padding: 30px;
@@ -20,17 +21,21 @@ body {
     font-weight: bold;
 }
 
-.pure-control-group, .pure-group {
+.pure-control-group,
+.pure-group {
     margin-bottom: 20px;
     position: relative;
 }
 
-.pure-control-group textarea, .pure-group input[type="file"], .pure-u-4 input[type="number"] {
+.pure-control-group textarea,
+.pure-group input[type="file"],
+.pure-u-4 input[type="number"] {
     padding: 10px;
     border-radius: 4px;
 }
 
-.pure-control-group label, .pure-u-4 label {
+.pure-control-group label,
+.pure-u-4 label {
     position: absolute;
     top: -8px;
     left: 10px;
@@ -66,7 +71,10 @@ body {
 }
 
 @media (max-width: 768px) {
-    .pure-control-group textarea, .pure-group input[type="file"], .pure-u-4 input[type="number"] {
+
+    .pure-control-group textarea,
+    .pure-group input[type="file"],
+    .pure-u-4 input[type="number"] {
         width: calc(100% - 20px);
     }
 
