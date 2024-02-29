@@ -92,7 +92,7 @@ body {
     top: 100%;
     left: 3px;
     margin-left: 12px;
-    width: calc(100% - 10px);
+    width: 100%;
     z-index: 900;
     background-color: #fff;
     border: 4px solid green;
@@ -105,6 +105,7 @@ body {
 
 .search-dropdown-item:last-child {
     border-bottom: none;
+    border-radius: 0px 0px 25px 25px;
 }
 
 .search-dropdown-item {
@@ -120,7 +121,6 @@ body {
 .search-dropdown-item:hover {
     background-color: #e9f3ff;
     border-bottom: 0px;
-    border-radius: 0px 0px 25px 25px;
 }
 
 .search-dropdown-item span {
