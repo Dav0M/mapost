@@ -18,12 +18,15 @@
 }
 
 .header-center,
-.header-right,
 .search-item {
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.header-right {
+    text-align: right;
 }
 
 .pure-menu-link,
