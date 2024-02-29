@@ -8,10 +8,10 @@ body {
 
 #map {
     position: absolute;
-    top: 10%;
+    top: 43px;
     bottom: 0;
     width: 100%;
-    height: 90%;
+    height: 94%;
 }
 
 #basemap-menu {
