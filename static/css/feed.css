@@ -90,8 +90,7 @@ body {
 .search-dropdown {
     position: absolute;
     top: 100%;
-    left: 3px;
-    margin-left: 12px;
+    left: 22px;
     width: 100%;
     z-index: 900;
     background-color: #fff;
