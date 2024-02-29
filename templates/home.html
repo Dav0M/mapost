@@ -22,17 +22,17 @@
         <div class="pure-menu-heading">Sort By:</div>
       </li>
       <li class="pure-menu-item sort-recent">
-        <a href="/?recent=true" class="pure-menu-link {% if not (session.location) %}active-sort{% endif %}">Recent</a>
+        <a href="/?recent=true{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link {% if not (session.location) %}active-sort{% endif %} sort-recent">Recent</a>
       </li>
       <li class="pure-menu-item sort-nearby">
-        <form action="/" , method="post" id="sort-form">
+        <form action="/{% if search %}?q={{ search }}{% endif %}" , method="post" id="sort-form">
           <label for="create-lat"></label>
           <input type="hidden" id="create-lat" name="create-lat" value="0">
 
           <label for="create-long"></label>
           <input type="hidden" id="create-long" name="create-long" value="0">
           <button type="button" id="curr-location"
-            class="sort-nearby pure-menu-link {% if session.location %}active-sort{% endif %}">Nearby</button>
+            class="pure-menu-link {% if session.location %}active-sort{% endif %} sort-nearby">Nearby</button>
         </form>
       </li>
     </ul>
@@ -94,25 +94,25 @@
     <ul class="pure-menu-list">
       {% if page > 1 %}
       <li class="pure-menu-item">
-        <a href="/?page=1" class="pure-menu-link">First</a>
+        <a href="/?page=1{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">First</a>
       </li>
       <li class="pure-menu-item page-back">
-        <a href="/?page={{ page-1 }}" class="pure-menu-link">Back</a>
+        <a href="/?page={{ page-1 }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">Back</a>
       </li>
       {% endif %}
 
       {% set startPage = page-2 if page-2 > 0 else 1 %}
       {% set endPage = page+2 if page+2 <= total else total %} {% for p in range(startPage, endPage+1) %} <li
         class="pure-menu-item {{ 'page-curr' if p == page else '' }}">
-        <a href="/?page={{ p }}" class="pure-menu-link">{{ p }}</a>
+        <a href="/?page={{ p }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">{{ p }}</a>
         </li>
         {% endfor %}
 
         {% if page < total %} <li class="pure-menu-item page-next">
-          <a href="/?page={{ page+1 }}" class="pure-menu-link">Next</a>
+          <a href="/?page={{ page+1 }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">Next</a>
           </li>
           <li class="pure-menu-item">
-            <a href="/?page={{ total }}" class="pure-menu-link">Last</a>
+            <a href="/?page={{ total }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">Last</a>
           </li>
           {% endif %}
     </ul>
