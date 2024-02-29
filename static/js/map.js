@@ -105,7 +105,6 @@ function getPosition(position) {
 
 
 
-
                 let feature = {
                     'type': 'Feature',
                     'properties': {
@@ -118,8 +117,7 @@ function getPosition(position) {
                                     <h4 class="post-content">
                                         ${item.content}
                                     </h4><br>
-                                    <img class="images" src="data:image;base64,${item.img}">
-                                </div >
+
                         `,
                         'icon': 'attraction',
                         'id': `${item.post_id}`,
@@ -133,6 +131,16 @@ function getPosition(position) {
                         'coordinates': [item.longitude, item.latitude]
                     }
                 };
+
+                //     <img class="images" src="data:image;base64,${item.img}">
+                // </div >
+
+                if (item.img != "") {
+                    feature['properties']['description'] += `<img class="images" src="data:image;base64,${item.img}"></div >`;
+                } else {
+                    feature['properties']['description'] += `</div >`;
+                }
+
                 features.push(feature);
 
 
