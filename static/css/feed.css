@@ -211,18 +211,34 @@ body {
 
 .post-image {
     object-fit: contain;
-    width: 50%;
-    height: auto;
+    width: 85%;
+    /* height: auto; */
+    /* width:auto; */
+    max-height: 400px;
     display: block;
-    margin-left: 1em;
+    margin-left: 1.6em;
     margin-right: auto;
     max-width: 100%;
-    margin-bottom: 1em;
+    text-align: center;
 }
 
 .images {
     max-width: 100%;
     padding-left: 2em;
+}
+
+.post-map {
+    /* position: absolute; */
+    object-fit: contain;
+    /* z-index: 999; */
+    width: 90%;
+    height: auto;
+    display: block;
+    padding-top: 1em;
+    margin-bottom: 1.5em;
+    margin-left: 0.9em;
+    text-align: center;
+
 }
 
 .post-location {
@@ -235,6 +251,8 @@ body {
 .post-footer {
     padding: 10px;
     border-top: 1px solid #eee;
+    background-color: white;
+    position: relative; 
 }
 
 @media (max-width: 768px) {

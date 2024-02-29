@@ -8,3 +8,6 @@
 <!-- https://docs.mapbox.com/mapbox-gl-js/example/setstyle/ -->
 <!-- MapBox Locator Reference -->
 <!-- https://docs.mapbox.com/help/tutorials/building-a-store-locator/ -->
+
+THis is how to generate static map image 
+https://docs.mapbox.com/api/maps/static-images/

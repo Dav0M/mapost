@@ -2,6 +2,12 @@
 {% block head %}
 {{ super() }}
 <title>MAPOST | Home</title>
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" -->
+<!-- integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous"> -->
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
 <link rel="stylesheet" href="/static/css/feed.css">
 <script src="/static/js/home.js"></script>
 <script src="/static/js/search.js" async></script>
@@ -57,7 +63,14 @@
           {% endif %}
         </div>
         <footer class="post-footer">
-          <div class="post-location">{{ posts[i]['geog'] }}</div>
+          <!-- <div class="post-location">{{posts[i]['lon']}}</div> -->
+          <div>
+            <!-- https://api.mapbox.com/styles/v1/{username}/{style_id}/static/{overlay}/{lon},{lat},{zoom},{bearing},{pitch}|{bbox}|{auto}/{width}x{height}{@2x} -->
+
+            <img
+              src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-l-embassy+f74e4e({{posts[i]['lon']}},{{posts[i]['lat']}})/{{posts[i]['lon']}},{{posts[i]['lat']}},13.75,0,60/400x175?access_token=pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2x0M2FqODhkMWdhZzJscDhsNnlzYTFyaCJ9.eSPui_SEdaclP0xtujBzvw"
+              class="post-map">
+          </div>
         </footer>
       </article>
       {% endif %}
@@ -82,7 +95,12 @@
           {% endif %}
         </div>
         <footer class="post-footer">
-          <div class="post-location">{{ posts[i]['geog'] }}</div>
+          <!-- <div class="post-location">{{ posts[i]['geog'] }}</div> -->
+          <div>
+            <img
+              src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-l-embassy+f74e4e({{posts[i]['lon']}},{{posts[i]['lat']}})/{{posts[i]['lon']}},{{posts[i]['lat']}},13.75,0,60/400x175?access_token=pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2x0M2FqODhkMWdhZzJscDhsNnlzYTFyaCJ9.eSPui_SEdaclP0xtujBzvw"
+              class="post-map">
+          </div>
         </footer>
       </article>
       {% endif %}
