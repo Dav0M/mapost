@@ -181,3 +181,8 @@ body {
 .button-color {
     color: black;
 }
+
+.pages {
+    text-align: center;
+    margin-top: 20px;
+}

@@ -97,23 +97,23 @@
       {% endif %}
       {% endfor %}
     </div>
-    <div class="pure-menu pure-menu-horizontal pages">
-      <ul class="pure-menu-list">
-        {% if page > 1%}
-        <li class="pure-menu-item page-back">
-          <a href="/user/{{ user['id'] }}?page={{ page-1 }}" class="pure-menu-link button-color">Back</a>
+    {% endif %}
+  </div>
+  <div class="pure-menu pure-menu-horizontal pages">
+    <ul class="pure-menu-list">
+      {% if page > 1%}
+      <li class="pure-menu-item page-back">
+        <a href="/user/{{ user['id'] }}?page={{ page-1 }}" class="pure-menu-link button-color">Back</a>
+      </li>
+      {% endif %}
+      <li class="pure-menu-item page-curr">
+        <a href="" class="pure-menu-heading">{{ page }}</a>
+      </li>
+      {% if page < total %} <li class="pure-menu-item page-next">
+        <a href="/user/{{ user['id'] }}?page={{ page+1 }}" class="pure-menu-link button-color">Next</a>
         </li>
         {% endif %}
-        <li class="pure-menu-item page-curr">
-          <a href="" class="pure-menu-heading">{{ page }}</a>
-        </li>
-        {% if page < total %} <li class="pure-menu-item page-next">
-          <a href="/user/{{ user['id'] }}?page={{ page+1 }}" class="pure-menu-link button-color">Next</a>
-          </li>
-          {% endif %}
-      </ul>
-    </div>
-    {% endif %}
+    </ul>
   </div>
 </div>
 
