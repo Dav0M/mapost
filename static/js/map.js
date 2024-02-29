@@ -324,7 +324,7 @@ function getPosition(position) {
             'source': 'placesSource',
             'layout': {
                 'icon-image': 'mapost-icon',
-                'icon-size': 0.25,
+                'icon-size': 0.75,
                 'icon-allow-overlap': true
             }
         });
