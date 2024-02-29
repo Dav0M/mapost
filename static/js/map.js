@@ -406,7 +406,7 @@ function getPosition(position) {
 
 
     map.on('load', () => {
-        map.loadImage('https://delulu-project1.onrender.com/static/imgs/main.png', function (error, image) {
+        map.loadImage('https://delulu-project1.onrender.com/static/imgs/location_map_icon.png', function (error, image) {
             if (error) throw error;
 
             map.addImage('mapost-icon', image);
