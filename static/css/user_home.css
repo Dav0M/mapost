@@ -107,14 +107,13 @@ body {
     left:10px;
 }
 
-.pure-menu-children {
+.pure-menu-children.more-children {
     max-width: 100px; 
     position: absolute;
     bottom: 14px;
     margin-left: 321px;
     
 }
-
 
 .pure-menu-list {
     color: #ffffff; 
