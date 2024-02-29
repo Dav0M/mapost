@@ -11,3 +11,16 @@
 
 THis is how to generate static map image 
 https://docs.mapbox.com/api/maps/static-images/
+
+
+This is how to embed a html to another html:
+https://docs.mapbox.com/help/glossary/iframe/
+
+Mapbox: How to get lat/lng value into input field and place a marker by mouse clicking on the map?
+https://stackoverflow.com/questions/64176190/mapbox-how-to-get-lat-lng-value-into-input-field-and-place-a-marker-by-mouse-cl
+
+Display Lat Lng Coordinates on click on Mapbox GL JS
+https://stackoverflow.com/questions/63158744/display-lat-lng-coordinates-on-click-on-mapbox-gl-js
+
+Get coordinates of the mouse pointer
+https://docs.mapbox.com/mapbox-gl-js/example/mouse-position/
