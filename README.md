@@ -5,8 +5,8 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 ## App Info:
 
 * Team Name: Delulu
-* App Name: TODO
-* App Link: <https://TODO.com/>
+* App Name: MAPOST
+* App Link: https://delulu-project1.onrender.com/
 
 ### Students
 
@@ -22,7 +22,7 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* Post Map View.
 
 ## Testing Notes
 
@@ -40,11 +40,9 @@ along with a very brief caption:**
 
 
 ## Mock-up 
+Press Pages to view other pages:
 
 https://app.moqups.com/65yuGy0ywLlNvmH97f7BkrxYrhJ9mT42/view/page/a4dc19d87
-Press Pages to view other pages 
-
-
 
 ## External Dependencies
 
@@ -52,7 +50,7 @@ Press Pages to view other pages
 Please do not document required libraries. or libraries that are mentioned in the product requirements**
 
 * Library or service name: description of use
-* ...
+* Mapbox: Used mapbox to make and integrate the post map display for our app.
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
