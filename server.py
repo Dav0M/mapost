@@ -151,7 +151,7 @@ def create_post():
         user_id = session["user_id"]["id"]
         if add_post(fd, img, user_id) == 0:
             return make_response("Post Failed", 500)
-        return redirect("/")
+        return redirect(f"/user/{user_id}")
 
 @app.get("/edit/<int:user_id>")
 @require_auth
@@ -182,7 +182,7 @@ def edit_user_post():
     img = request.files['image-input']
     if update_post(fd, img, session['user_id']['id']) == 0:
         return make_response("Invalid request", 400)
-    return redirect("/")
+    return redirect(f"/user/{session['user_id']['id']}")
 
 @app.route("/search", methods=['GET'])
 def search_posts():
