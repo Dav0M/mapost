@@ -101,3 +101,8 @@ body {
     padding: 10px 0;
     margin-top: 20px;
 }
+
+.pure-menu-children.user-children {
+    width: 100%;
+    text-align: center;
+}
