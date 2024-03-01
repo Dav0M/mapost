@@ -22,7 +22,9 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* Post Map View.
+* The map view of posts implemented using Mapbox
+* Search bar with a dynamic dropdown for autofilling queries
+* Posts feed with persistent sorting and pagination
 
 ## Testing Notes
 
@@ -33,11 +35,21 @@ CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/
 
 ## Screenshots of Site
 
-**[Add a screenshot of each key page (around 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
-along with a very brief caption:**
+### Feed
+One of two main ways to view posts. Includes a paginated feed with a search for text content and a recent/nearby sort.
+![](screenshots/feed.png)
 
-![](https://media.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
+### Map
+One of two main ways to view posts. Includes 4 different map styles and an interactive sidebar feed to go to a post on the map. Has a marker showing current position.
+![](screenshots/map.png)
 
+### Create
+Creation page for a user post. Includes text, image, and coordinate(number) input. Able to use current location to autofill coordinates.
+![](screenshots/create.png)
+
+### User
+A user's page which shows a paginated feed of their posts ordered by recency. If it's your page, an additional button appears for edit and delete abilities.
+![](screenshots/user.png)
 
 ## Mock-up 
 Press Pages to view other pages:
@@ -50,7 +62,7 @@ https://app.moqups.com/65yuGy0ywLlNvmH97f7BkrxYrhJ9mT42/view/page/a4dc19d87
 Please do not document required libraries. or libraries that are mentioned in the product requirements**
 
 * Library or service name: description of use
-* Mapbox: Used mapbox to make and integrate the post map display for our app.
+* Mapbox: Used Mapbox to make and integrate the posts map display
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
