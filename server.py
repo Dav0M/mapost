@@ -18,7 +18,7 @@ app.secret_key = env['FLASK_SECRET']
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
-print(os.environ.get("DATABASE_URL"))
+#print(os.environ.get("DATABASE_URL"))
 db = SQLAlchemy(app)
 
 class UserPost(db.Model):
@@ -218,7 +218,7 @@ def get_info():
         }
         post_package.append(post_i)
 
-    print("post_package")
+    #print("post_package")
 
     return jsonify(post_package)
 

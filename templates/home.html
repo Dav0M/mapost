@@ -4,8 +4,6 @@
 <title>MAPOST | Home</title>
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.css" rel="stylesheet">
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet">
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" -->
-<!-- integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous"> -->
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.1.2/mapbox-gl.js"></script>
 <link rel="stylesheet" href="/static/css/feed.css">
@@ -14,8 +12,10 @@
 {% endblock %}
 {% block content %}
 <div id="layout" class="pure-g">
+
   <div class="pure-menu pure-menu-horizontal feed-tools">
     <ul class="pure-menu-list">
+
       <li class="pure-menu-item">
         <div class="container ">
           <div class="search-container">
@@ -24,12 +24,14 @@
           </div>
         </div>
       </li>
+
       <li class="pure-menu-item sort">
         <div class="pure-menu-heading">Sort By:</div>
       </li>
       <li class="pure-menu-item sort-recent">
         <a href="/?recent=true{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link {% if not (session.location) %}active-sort{% endif %} sort-recent">Recent</a>
       </li>
+
       <li class="pure-menu-item sort-nearby">
         <form action="/{% if search %}?q={{ search }}{% endif %}" , method="post" id="sort-form">
           <label for="create-lat"></label>
@@ -37,10 +39,12 @@
 
           <label for="create-long"></label>
           <input type="hidden" id="create-long" name="create-long" value="0">
+
           <button type="button" id="curr-location"
             class="pure-menu-link {% if session.location %}active-sort{% endif %} sort-nearby">Nearby</button>
         </form>
       </li>
+
     </ul>
   </div>
 
@@ -56,12 +60,14 @@
             <div class="post-date">{{ posts[i]['time'] }}</div>
           </div>
         </header>
+
         <div class="post-body">
           <p class="post-content">{{ posts[i]['content'] }}</p>
           {% if posts[i].get('img') != '' %}
           <img class="post-image" src="data:image;base64,{{ posts[i]['img'] }}" alt="Post image">
           {% endif %}
         </div>
+
         <footer class="post-footer">
           <!-- <div class="post-location">{{posts[i]['lon']}}</div> -->
           <div>
@@ -88,14 +94,15 @@
             <div class="post-date">{{ posts[i]['time'] }}</div>
           </div>
         </header>
+
         <div class="post-body">
           <p class="post-content">{{ posts[i]['content'] }}</p>
           {% if posts[i].get('img') != '' %}
           <img class="post-image" src="data:image;base64,{{ posts[i]['img'] }}" alt="Post image">
           {% endif %}
         </div>
+
         <footer class="post-footer">
-          <!-- <div class="post-location">{{ posts[i]['geog'] }}</div> -->
           <div>
             <img
               src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-l-embassy+f74e4e({{posts[i]['lon']}},{{posts[i]['lat']}})/{{posts[i]['lon']}},{{posts[i]['lat']}},13.75,0,60/400x175?access_token=pk.eyJ1IjoianlrMTk5OTEyMjIiLCJhIjoiY2x0M2FqODhkMWdhZzJscDhsNnlzYTFyaCJ9.eSPui_SEdaclP0xtujBzvw"
@@ -120,19 +127,21 @@
       {% endif %}
 
       {% set startPage = page-2 if page-2 > 0 else 1 %}
-      {% set endPage = page+2 if page+2 <= total else total %} {% for p in range(startPage, endPage+1) %} <li
-        class="pure-menu-item {{ 'page-curr' if p == page else '' }}">
+      {% set endPage = page+2 if page+2 <= total else total %}
+      {% for p in range(startPage, endPage+1) %}
+      <li class="pure-menu-item {{ 'page-curr' if p == page else '' }}">
         <a href="/?page={{ p }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">{{ p }}</a>
-        </li>
-        {% endfor %}
+      </li>
+      {% endfor %}
 
-        {% if page < total %} <li class="pure-menu-item page-next">
-          <a href="/?page={{ page+1 }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">Next</a>
-          </li>
-          <li class="pure-menu-item">
-            <a href="/?page={{ total }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">Last</a>
-          </li>
-          {% endif %}
+      {% if page < total %} 
+      <li class="pure-menu-item page-next">
+        <a href="/?page={{ page+1 }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">Next</a>
+      </li>
+      <li class="pure-menu-item">
+        <a href="/?page={{ total }}{% if search %}&q={{ search }}{% endif %}" class="pure-menu-link">Last</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 
