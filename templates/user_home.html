@@ -100,22 +100,36 @@
     </div>
     {% endif %}
   </div>
+
+
   <div class="pure-menu pure-menu-horizontal pages">
     <ul class="pure-menu-list">
-      {% if page > 1%}
+      {% if page > 1 %}
+      <li class="pure-menu-item">
+        <a href="/user/{{ user.id }}?page=1" class="pure-menu-link">First</a>
+      </li>
       <li class="pure-menu-item page-back">
-        <a href="/user/{{ user['id'] }}?page={{ page-1 }}" class="pure-menu-link button-color">Back</a>
+        <a href="/user/{{ user.id }}?page={{ page-1 }}" class="pure-menu-link">Back</a>
       </li>
       {% endif %}
-      <li class="pure-menu-item page-curr">
-        <a href="" class="pure-menu-heading">{{ page }}</a>
-      </li>
-      {% if page < total %} <li class="pure-menu-item page-next">
-        <a href="/user/{{ user['id'] }}?page={{ page+1 }}" class="pure-menu-link button-color">Next</a>
+
+      {% set startPage = page-2 if page-2 > 0 else 1 %}
+      {% set endPage = page+2 if page+2 <= total else total %} {% for p in range(startPage, endPage+1) %} <li
+        class="pure-menu-item {{ 'page-curr' if p == page else '' }}">
+        <a href="/user/{{ user.id }}?page={{ p }}" class="pure-menu-link">{{ p }}</a>
         </li>
-        {% endif %}
+        {% endfor %}
+
+        {% if page < total %} <li class="pure-menu-item page-next">
+          <a href="/user/{{ user.id }}?page={{ page+1 }}" class="pure-menu-link">Next</a>
+          </li>
+          <li class="pure-menu-item">
+            <a href="/user/{{ user.id }}?page={{ total }}" class="pure-menu-link">Last</a>
+          </li>
+          {% endif %}
     </ul>
   </div>
+
 </div>
 
 {% endblock %}

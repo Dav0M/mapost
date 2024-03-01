@@ -299,3 +299,8 @@ body {
 .page-curr .pure-menu-heading {
     font-weight: bold;
 }
+
+#curr-location.active-sort,
+.sort-recent a.active-sort {
+    background-color: var(--hover-green);
+}

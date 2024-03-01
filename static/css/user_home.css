@@ -194,3 +194,35 @@ body {
 pure-menu-has-children {
     margin-bottom: 15px;
 }
+
+.pages .pure-menu-link,
+.page-back .pure-menu-link,
+.page-next .pure-menu-link {
+    background-color: #00853e;
+    color: white;
+}
+
+.pages .pure-menu-link:hover,
+.pages .pure-menu-link:focus,
+.pages .pure-menu-item a:hover,
+.page-curr .pure-menu-link {
+    background-color: var(--hover-green);
+    color: #ffffff;
+}
+
+.pages .pure-menu-link {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.pages .pure-menu-link a:active {
+    background-color: var(--hover-green);
+    color: white;
+}
+
+.page-curr .pure-menu-link,
+.page-curr .pure-menu-heading {
+    font-weight: bold;
+}
