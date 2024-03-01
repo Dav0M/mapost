@@ -134,6 +134,7 @@ body {
 .posts-grid {
     display: flex;
     background-color: #f7f7f7;
+    border-radius: 10px;
     margin-left: 12.5%;
     justify-content: center;
     flex-wrap: wrap;
@@ -161,7 +162,8 @@ body {
     flex-wrap: wrap;
     flex-direction: column;
     overflow: hidden;
-    border-radius: 5px;
+    border-radius: 10px;
+    border: solid rgb(214, 212, 212);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

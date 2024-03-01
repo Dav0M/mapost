@@ -145,14 +145,10 @@ body {
     left: 10px;
 }
 
-.pure-menu-has-children {
-    margin-bottom: 10px;
-}
-
 .pure-menu-children.more-children {
     max-width: 100px;
     position: relative;
-    bottom: -46px;
+    bottom: -38px;
     margin-left: 47px;
     margin-bottom: 47px;
 }
@@ -171,6 +167,7 @@ body {
     padding: 6px 11px;
     border-radius: 5px;
     margin-left: 15px;
+    margin-bottom: 10px;
 }
 
 .post-col-left {
