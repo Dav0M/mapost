@@ -323,8 +323,8 @@ function getPosition(position) {
             'type': 'symbol',
             'source': 'placesSource',
             'layout': {
-                'icon-image': 'mapost-icon',
-                'icon-size': 0.75,
+                'icon-image': ['get', 'icon'],
+                'icon-size': 2.50,
                 'icon-allow-overlap': true
             }
         });
@@ -406,13 +406,6 @@ function getPosition(position) {
 
 
     map.on('load', () => {
-        map.loadImage('https://delulu-project1.onrender.com/static/imgs/location_map_icon.png', function (error, image) {
-            if (error) throw error;
-
-            map.addImage('mapost-icon', image);
-
-            addAdditionalSourceAndLayer();
-        });
         toggleSidebar('left');
         // buildLocationList(geojson_data);
     });
