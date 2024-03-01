@@ -8,8 +8,7 @@
 {% block content %}
 <div class="pure-g">
   <div class="pure-u-1-4 pure-u-md-1-4"></div>
-  <form action="/api/post/edit", method="post" enctype="multipart/form-data" class="pure-form pure-g pure-u-1-2">
-    <label for="post-id"></label>
+  <form action="/api/post/edit" method="post" enctype="multipart/form-data" class="pure-form pure-g pure-u-1-2">
     <input type="hidden" id="post-id" name="post-id" value="{{ post_id }}">
     <fieldset>
       <legend>Edit Your Post:</legend>
