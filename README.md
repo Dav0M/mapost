@@ -1,71 +1,29 @@
-# Module 1 Group Assignment !!!
+# MAPOST
 
-CSCI 5117, Spring 2024, [assignment description](https://canvas.umn.edu/courses/413159/pages/project-1)
+The first of two open-ended projects where I worked in a team of six to build and deploy a full-stack application. The only strict requirements given were a provided tech stack and the goal for the app being to create and edit online content. The overall result for this project was an A :)
 
-## App Info:
+## Overview
 
-* Team Name: Delulu
-* App Name: MAPOST
-* App Link: https://delulu-project1.onrender.com/
+MAPOST is a social platform with a focus on location and coordinates. The app provides both a standard and map feed (with [Mapbox](https://www.mapbox.com/)) to view posts from different users to play on the idea of location and coords. Other features include: provider logins, a dynamic search dropdown and autofill, persistent sorting using both time and location, image uploading, etc.  
 
-### Students
+The project was built using JavaScript and HTML/CSS for the front end, Python and Flask for the back end, [Auth0](https://auth0.com/) for authentication, and a PostgreSQL database. The app and database were previously hosted on [Render](https://render.com/).
 
-* Jimmy Xiao, xiao0261@umn.edu
-* David Mai, mai00048@umn.edu
-* Lingyi Xu, xu001032@umn.edu
-* Hannah Cheng, cheng861@umn.edu
-* Yuankun Jiao, jiao0052@umn.edu
+## Screenshots
 
-
-## Key Features
-
-**Describe the most challenging features you implemented
-(one sentence per bullet, maximum 4 bullets):**
-
-* The map view of posts implemented using Mapbox
-* Search bar with a dynamic dropdown for autofilling queries
-* Posts feed with persistent sorting and pagination
-
-## Testing Notes
-
-**Is there anything special we need to know in order to effectively test your app? (optional):**
-
-* ...
-
-
-## Screenshots of Site
+[Initial mockups](https://app.moqups.com/65yuGy0ywLlNvmH97f7BkrxYrhJ9mT42/view/page/a4dc19d87)
 
 ### Feed
 One of two main ways to view posts. Includes a paginated feed with a search for text content and a recent/nearby sort.
-![](screenshots/feed.png)
+![Feed View](screenshots/feed.png)
 
 ### Map
 One of two main ways to view posts. Includes 4 different map styles and an interactive sidebar feed to go to a post on the map. Has a marker showing current position.
-![](screenshots/map.png)
+![Map View](screenshots/map.png)
 
 ### Create
 Creation page for a user post. Includes text, image, and coordinate(number) input. Able to use current location to autofill coordinates.
-![](screenshots/create.png)
+![Create View](screenshots/create.png)
 
 ### User
 A user's page which shows a paginated feed of their posts ordered by recency. If it's your page, an additional button appears for edit and delete abilities.
-![](screenshots/user.png)
-
-## Mock-up 
-Press Pages to view other pages:
-
-https://app.moqups.com/65yuGy0ywLlNvmH97f7BkrxYrhJ9mT42/view/page/a4dc19d87
-
-## External Dependencies
-
-**Document integrations with 3rd Party code or services here.
-Please do not document required libraries. or libraries that are mentioned in the product requirements**
-
-* Library or service name: description of use
-* Mapbox: Used Mapbox to make and integrate the posts map display
-
-**If there's anything else you would like to disclose about how your project
-relied on external code, expertise, or anything else, please disclose that
-here:**
-
-...
+![User Page](screenshots/user.png)
